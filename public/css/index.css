@@ -1,0 +1,11 @@
+#map-container {
+    width: 70%;
+    height: 60%;
+    margin: auto;
+    border: 1px solid black;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
