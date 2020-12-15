@@ -1,7 +1,31 @@
-#map-container {
-    width: 70%;
-    height: 60%;
+#container {
+    width: 80%;
     margin: auto;
+}
+
+#input-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+#left-grid, #right-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
+label { 
+    text-align: right; 
+}
+
+label:after { 
+    content: ":"; 
+}
+
+#map-container {
+    height: 60%;
     border: 1px solid black;
 }
 
