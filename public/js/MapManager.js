@@ -9,8 +9,38 @@ function initMap() {
         center: {lat: latitude, lng: longitude}
     });
 
-    // var script = document.createElement('script');
-    // script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
-    // document.getElementsByTagName('head')[0].appendChild(script);
+    // geocoder is used to search for locations using user input
+    var geocoder = new google.maps.Geocoder();
 
+    document.getElementById('search-button').addEventListener('click', function() {
+        geocodeAddress(geocoder, map);
+    });
+};
+
+// search for location and display results
+function geocodeAddress(geocoder, map) {
+    var address = document.getElementById("location").value;
+  
+    // upon successful search, the geocoder returns an object containing info about location
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+            map.setCenter(results[0].geometry.location);
+    
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+    
+            var coords = results[0].geometry.location;
+            
+            var lat = coords.lat().toFixed(7);
+            var long = coords.lng().toFixed(7);    
+            console.log(lat, long);                                                
+    
+        } else if (status === "ZERO_RESULTS" || status === "INVALID_REQUEST") {
+            console.log(status)
+        } else {
+            console.log(status)
+        }
+    });
 };
