@@ -9,7 +9,14 @@
             </div>
             
             <div class="label">
-                <label>Date</label>
+                <label>Start Date</label>
+            </div>
+            <div>
+                <input type="date">
+            </div>
+
+            <div class="label">
+                <label>End Date</label>
             </div>
             <div>
                 <input type="date">
@@ -25,10 +32,10 @@
             </div>
 
             <div class="label">
-                <label>Minimum Magnitude</label>
+                <label>Magnitude Range</label>
             </div>
             <div>
-                <input type="number">
+                <input type="number"><p id="mag-range"> to </p><input type="number">
             </div>
         </div>
     </div>
@@ -45,5 +52,5 @@
 <script type="text/javascript" src='/js/DataRequestManager.js'></script>
 <script type="text/javascript" src='/js/PageBuilder.js'></script>
 <script type="text/javascript" src='/js/MapManager.js'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOORh5uUlLn1JkBy8JjKxA2GrA5SbgAWo&callback=initMap"></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOORh5uUlLn1JkBy8JjKxA2GrA5SbgAWo&callback=initMap"></script> --}}
 <link rel="stylesheet" type="text/css" href="/css/index.css">
