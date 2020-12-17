@@ -1,4 +1,4 @@
-class PageBuilder {
+class PageManager {
     constructor() {
         var map = document.getElementById("map");
     }
@@ -29,5 +29,5 @@ class PageBuilder {
     }
 }
 
-var pb = new PageBuilder();
+var pb = new PageManager();
 pb.loadPage();
