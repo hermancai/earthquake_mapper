@@ -5,21 +5,21 @@
                 <label>Location</label>
             </div>
             <div>
-                <input id="location" type="text">
+                <input id="location" type="text" placeholder="San Francisco">
             </div>
             
             <div class="label">
-                <label>Start Date</label>
+                <label>Start Date (UTC)</label>
             </div>
             <div>
-                <input type="date">
+                <input type="date" id="start-date">
             </div>
 
             <div class="label">
-                <label>End Date</label>
+                <label>End Date (UTC)</label>
             </div>
             <div>
-                <input type="date">
+                <input type="date" id="end-date">
             </div>
         </div>
 
@@ -28,14 +28,14 @@
                 <label>Search Radius (km)</label>
             </div>
             <div>
-                <input type="number">
+                <input type="number" value="100">
             </div>
 
             <div class="label">
                 <label>Magnitude Range</label>
             </div>
             <div>
-                <input type="number"><p id="mag-range"> to </p><input type="number">
+                <input type="number" value="0"><p id="mag-range"> to </p><input type="number" value="10">
             </div>
         </div>
     </div>

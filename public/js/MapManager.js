@@ -37,10 +37,8 @@ function geocodeAddress(geocoder, map) {
             var long = coords.lng().toFixed(7);    
             console.log(lat, long);                                                
     
-        } else if (status === "ZERO_RESULTS" || status === "INVALID_REQUEST") {
-            console.log(status)
         } else {
-            console.log(status)
+            console.log(status);
         }
     });
 };
