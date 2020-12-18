@@ -15,8 +15,17 @@ function initMap() {
     
     document.getElementById('search-button').addEventListener('click', async function() {
         var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map);
-        var response = await drm.getData(drm.buildURL(latitude, longitude));
-        console.log(response);
+        // var response = await drm.getData(drm.buildURL(latitude, longitude));
+        var response = await drm.getData(drm.testURL());
+
+        console.log(response)
+
+        for (var i = 0; i < response.features.length; i++) {
+            var coords = response.features[i].geometry.coordinates;
+            var magnitude = response.features[i].properties.mag;
+            drawCircle(map, coords, magnitude);
+        }
+        
     });
 };
 
@@ -49,3 +58,15 @@ async function geocodeAddress(geocoder, map) {
     var response = await getCoordinates.catch((err) => { console.log(err); });
     return {latitude: response.latitude, longitude: response.longitude};
 };
+
+function drawCircle(map, coords, magnitude) {
+    const eventCircle = new google.maps.Circle({
+        map,
+        fillColor: "red",
+        fillOpacity: 0.2,
+        strokeColor: "white",
+        strokeWeight: 0.5,
+        radius: Math.pow(2, magnitude) * 500,
+        center: { lat: coords[1], lng: coords[0] },
+    })
+}

@@ -1,6 +1,10 @@
 class DataRequestManager {
     constructor() {}
 
+    testURL() {
+        return "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-12-11&endtime=2020-12-18&latitude=37.77&longitude=-122.42&maxradiuskm=50"
+    }
+
     buildURL(latitude, longitude) {
         var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
         var startDate = "&starttime=" + document.getElementById("start-date").value;
@@ -18,7 +22,6 @@ class DataRequestManager {
         
             req.onload = function(){
                 var response = JSON.parse(this.responseText);
-                console.log("resolved")
                 resolve(response);
             };
 
