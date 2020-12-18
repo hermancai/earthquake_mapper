@@ -8,14 +8,14 @@ class PageManager {
     }
 
     setDefaultDates() {
-        var today = new Date();
-        document.getElementById("end-date").valueAsDate = today;
+        var startDate = new Date();
+        document.getElementById("end-date").valueAsDate = startDate;
 
-        var yesterday = new Date(today.valueOf() - 1000 * 60 * 60 * 24 * 1)
-        document.getElementById("start-date").valueAsDate = yesterday
+        var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 7)
+        document.getElementById("start-date").valueAsDate = endDate
 
-        console.log("start date:", yesterday)
-        console.log("end date:", today)
+        console.log("start date:", endDate)
+        console.log("end date:", startDate)
     }
 }
 
