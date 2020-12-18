@@ -2,22 +2,27 @@ class DataRequestManager {
     constructor() {}
 
     buildURL(latitude, longitude) {
-        // return "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02&minmagnitude=5";
         var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
-        
+        var startDate = "&starttime=" + document.getElementById("start-date").value;
+        var endDate = "&endtime=" + document.getElementById("end-date").value;
+        var coordinates = "&latitude=" + latitude + "&longitude=" + longitude;
+        var maxRadiusKm = "&maxradiuskm=" + document.getElementById("max-radius-km").value;
+        return baseURL + startDate + endDate + coordinates + maxRadiusKm;
     }
 
     getData(url) {
-        var req = new XMLHttpRequest();
-        req.open("GET", url, true);
-        req.send();
-    
-        req.onreadystatechange = function(){
-            // readyState: 4 means request finished and response is ready
-            if(this.readyState == 4 && this.status >= 200 && this.status < 400) {
+        return new Promise(function(resolve, reject) {
+            var req = new XMLHttpRequest();
+            req.open("GET", url, true);
+            req.send();
+        
+            req.onload = function(){
                 var response = JSON.parse(this.responseText);
-                console.log(response);
-            }
-        };
+                console.log("resolved")
+                resolve(response);
+            };
+
+            req.onerror = function() { reject(this.status) }
+        })
     }
 }

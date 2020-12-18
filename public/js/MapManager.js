@@ -15,7 +15,8 @@ function initMap() {
     
     document.getElementById('search-button').addEventListener('click', async function() {
         var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map);
-        drm.getData(drm.buildURL(latitude, longitude));
+        var response = await drm.getData(drm.buildURL(latitude, longitude));
+        console.log(response);
     });
 };
 
@@ -35,8 +36,8 @@ async function geocodeAddress(geocoder, map) {
                 });
         
                 var coords = results[0].geometry.location;
-                var lat = coords.lat().toFixed(7);
-                var long = coords.lng().toFixed(7);    
+                var lat = coords.lat().toFixed(2);
+                var long = coords.lng().toFixed(2);    
                 resolve({latitude: lat, longitude: long})                                        
         
             } else {
