@@ -1,10 +1,8 @@
+// The DataRequestManager class is responsible for making requests to USGS.
 class DataRequestManager {
     constructor() {}
 
-    testURL() {
-        return "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-12-11&endtime=2020-12-18&latitude=37.77&longitude=-122.42&maxradiuskm=50"
-    }
-
+    // Gather user input from the page to create a URL.
     buildURL(latitude, longitude) {
         var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
         var startDate = "&starttime=" + document.getElementById("start-date").value;
@@ -14,6 +12,7 @@ class DataRequestManager {
         return baseURL + startDate + endDate + coordinates + maxRadiusKm;
     }
 
+    // Async request to USGS and return JSON data.
     getData(url) {
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest();

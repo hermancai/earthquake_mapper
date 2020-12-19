@@ -1,38 +1,39 @@
+// on page load, initialize a map and search button
 function initMap() {
     // Default map location: San Francisco
-    var longitude = -122.33;
-    var latitude = 47.61;
+    var longitude = -122.42;
+    var latitude = 37.77;
 
     // embed a google map
     var map = new google.maps.Map(this.map, {
         zoom: 12,
         center: {lat: latitude, lng: longitude}
     });
+    
+    var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
+    var drm = new DataRequestManager();  // for getting data from USGS
 
-    // geocoder is used to search for locations using user input
-    var geocoder = new google.maps.Geocoder();
-    var drm = new DataRequestManager();
-
+    // clicking 'search' will display results on the map based on user input
     document.getElementById('search-button').addEventListener('click', async function() {
+        // wait for google maps to finish searching for location
         var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map); 
-        var bounds = new google.maps.LatLngBounds();
-
+        // wait for USGS to return JSON response
         var response = await drm.getData(drm.buildURL(latitude, longitude));
-        // var response = await drm.getData(drm.testURL());
 
-        console.log(response)
+        var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
 
+        // draw results on the map
         for (var i = 0; i < response.features.length; i++) {
             var coords = response.features[i].geometry.coordinates;
             var magnitude = response.features[i].properties.mag;
             drawCircle(map, bounds, coords, magnitude);
         }
-        map.fitBounds(bounds);
-        
+
+        map.fitBounds(bounds);  // change map zoom level based on results
     });
 };
 
-// search for location and display results
+// async search for the location and return location coordinates
 async function geocodeAddress(geocoder, map) {
     var address = document.getElementById("location").value;
     
@@ -42,15 +43,14 @@ async function geocodeAddress(geocoder, map) {
             if (status === 'OK') {
                 map.setCenter(results[0].geometry.location);
         
+                // create a pin marker for the searched location
                 var marker = new google.maps.Marker({
                     map: map,
-                    position: results[0].geometry.location
+                    position: results[0].geometry.location,
                 });
         
-                var coords = results[0].geometry.location;
-                var lat = coords.lat().toFixed(2);
-                var long = coords.lng().toFixed(2);    
-                resolve({latitude: lat, longitude: long})                                        
+                var coords = results[0].geometry.location;  
+                resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
         
             } else {
                 reject(status);
@@ -62,9 +62,11 @@ async function geocodeAddress(geocoder, map) {
     return {latitude: response.latitude, longitude: response.longitude};
 };
 
+// draw a circle on the map given event info
 function drawCircle(map, bounds, coords, magnitude) {
-    var eventCenter = { lat: coords[1], lng: coords[0] }
-    bounds.extend(eventCenter);
+    var eventCenter = { lat: coords[1], lng: coords[0] }  // maps api LatLngLiteral
+    bounds.extend(eventCenter);  // update zoom level to fit existing results
+
     const eventCircle = new google.maps.Circle({
         map,
         fillColor: "red",
