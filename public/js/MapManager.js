@@ -19,15 +19,17 @@ function initMap() {
         var { latitude: latitude, longitude: longitude } = await searchLocation(geocoder, map); 
         var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
 
-        var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
+        if (response.features.length > 0) {
+            var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
 
-        // draw results on the map
-        for (var i = 0; i < response.features.length; i++) {
-            var coords = response.features[i].geometry.coordinates;
-            var magnitude = response.features[i].properties.mag;
-            drawCircle(map, bounds, coords, magnitude);
+            // draw results on the map
+            for (var i = 0; i < response.features.length; i++) {
+                var coords = response.features[i].geometry.coordinates;
+                var magnitude = response.features[i].properties.mag;
+                drawCircle(map, bounds, coords, magnitude);
+            }
+            map.fitBounds(bounds);  // change map zoom level based on results
         }
-        map.fitBounds(bounds);  // change map zoom level based on results
     });
 };
 
