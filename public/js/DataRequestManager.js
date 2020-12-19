@@ -9,7 +9,10 @@ class DataRequestManager {
         var endDate = "&endtime=" + document.getElementById("end-date").value;
         var coordinates = "&latitude=" + latitude + "&longitude=" + longitude;
         var maxRadiusKm = "&maxradiuskm=" + document.getElementById("max-radius-km").value;
-        return baseURL + startDate + endDate + coordinates + maxRadiusKm;
+        var magnitudeRange = "&minmagnitude=" + document.getElementById("min-magnitude").value
+                                + "&maxmagnitude=" + document.getElementById("max-magnitude").value;
+        var resultsLimit = "&limit=" + document.getElementById("results-limit").value;
+        return baseURL + startDate + endDate + coordinates + maxRadiusKm + magnitudeRange + resultsLimit;
     }
 
     // Async request to USGS and return JSON data.
