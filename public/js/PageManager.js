@@ -12,5 +12,3 @@ class PageManager {
         document.getElementById("start-date").valueAsDate = endDate
     }
 }
-
-var pb = new PageManager();

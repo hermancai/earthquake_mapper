@@ -1,5 +1,9 @@
 // on page load, initialize a map and search button
 function initMap() {
+    var pm = new PageManager();  // for managing user input
+    var drm = new DataRequestManager();  // for getting data from USGS
+    var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
+
     // Default map location: San Francisco
     var longitude = -122.42;
     var latitude = 37.77;
@@ -10,15 +14,10 @@ function initMap() {
         center: {lat: latitude, lng: longitude}
     });
     
-    var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
-    var drm = new DataRequestManager();  // for getting data from USGS
-
     // clicking 'search' will display results on the map based on user input
     document.getElementById('search-button').addEventListener('click', async function() {
-        // wait for google maps to finish searching for location
-        var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map); 
-        // wait for USGS to return JSON response
-        var response = await drm.getData(drm.buildURL(latitude, longitude));
+        var { latitude: latitude, longitude: longitude } = await searchLocation(geocoder, map); 
+        var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
 
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
 
@@ -28,13 +27,12 @@ function initMap() {
             var magnitude = response.features[i].properties.mag;
             drawCircle(map, bounds, coords, magnitude);
         }
-
         map.fitBounds(bounds);  // change map zoom level based on results
     });
 };
 
 // async search for the location and return location coordinates
-async function geocodeAddress(geocoder, map) {
+async function searchLocation(geocoder, map) {
     var address = document.getElementById("location").value;
     
     var getCoordinates = new Promise(function(resolve, reject) {

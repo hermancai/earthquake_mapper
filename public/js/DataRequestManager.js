@@ -16,9 +16,11 @@ class DataRequestManager {
     }
 
     // Async request to USGS and return JSON data.
-    getData(url) {
+    getData(latitude, longitude) {
+        var urlBuilder = this.buildURL;
         return new Promise(function(resolve, reject) {
             var req = new XMLHttpRequest();
+            var url = urlBuilder(latitude, longitude);
             req.open("GET", url, true);
             req.send();
         
