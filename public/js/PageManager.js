@@ -11,7 +11,7 @@ class PageManager {
         var startDate = new Date();
         document.getElementById("end-date").valueAsDate = startDate;
 
-        var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 7)
+        var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 30)
         document.getElementById("start-date").valueAsDate = endDate
     }
 }
