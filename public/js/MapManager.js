@@ -15,8 +15,8 @@ function initMap() {
     
     document.getElementById('search-button').addEventListener('click', async function() {
         var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map);
-        // var response = await drm.getData(drm.buildURL(latitude, longitude));
-        var response = await drm.getData(drm.testURL());
+        var response = await drm.getData(drm.buildURL(latitude, longitude));
+        // var response = await drm.getData(drm.testURL());
 
         console.log(response)
 
@@ -63,10 +63,10 @@ function drawCircle(map, coords, magnitude) {
     const eventCircle = new google.maps.Circle({
         map,
         fillColor: "red",
-        fillOpacity: 0.2,
+        fillOpacity: 0.25,
         strokeColor: "white",
         strokeWeight: 0.5,
-        radius: Math.pow(2, magnitude) * 500,
+        radius: Math.pow(2, magnitude) * 250,
         center: { lat: coords[1], lng: coords[0] },
     })
 }
