@@ -1,7 +1,7 @@
 function initMap() {
-    // Default map location: OSU
-    var longitude = -123.2794443;
-    var latitude = 44.5637806;
+    // Default map location: San Francisco
+    var longitude = -122.33;
+    var latitude = 47.61;
 
     // embed a google map
     var map = new google.maps.Map(this.map, {
@@ -12,9 +12,11 @@ function initMap() {
     // geocoder is used to search for locations using user input
     var geocoder = new google.maps.Geocoder();
     var drm = new DataRequestManager();
-    
+
     document.getElementById('search-button').addEventListener('click', async function() {
-        var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map);
+        var { latitude: latitude, longitude: longitude } = await geocodeAddress(geocoder, map); 
+        var bounds = new google.maps.LatLngBounds();
+
         var response = await drm.getData(drm.buildURL(latitude, longitude));
         // var response = await drm.getData(drm.testURL());
 
@@ -23,8 +25,9 @@ function initMap() {
         for (var i = 0; i < response.features.length; i++) {
             var coords = response.features[i].geometry.coordinates;
             var magnitude = response.features[i].properties.mag;
-            drawCircle(map, coords, magnitude);
+            drawCircle(map, bounds, coords, magnitude);
         }
+        map.fitBounds(bounds);
         
     });
 };
@@ -59,7 +62,9 @@ async function geocodeAddress(geocoder, map) {
     return {latitude: response.latitude, longitude: response.longitude};
 };
 
-function drawCircle(map, coords, magnitude) {
+function drawCircle(map, bounds, coords, magnitude) {
+    var eventCenter = { lat: coords[1], lng: coords[0] }
+    bounds.extend(eventCenter);
     const eventCircle = new google.maps.Circle({
         map,
         fillColor: "red",
@@ -67,6 +72,6 @@ function drawCircle(map, coords, magnitude) {
         strokeColor: "white",
         strokeWeight: 0.5,
         radius: Math.pow(2, magnitude) * 250,
-        center: { lat: coords[1], lng: coords[0] },
+        center: eventCenter,
     })
 }
