@@ -1,7 +1,17 @@
 // The PageManager class manages user input on the page.
 class PageManager {
     constructor() {
+        document.getElementById("default-button").addEventListener("click", this.setDefaultValues);
+        document.getElementById("clear-button").addEventListener("click", this.clearValues);
+    }
+
+    setDefaultValues = () => {
         this.setDefaultDates();
+        document.getElementById("location").value = "San Francisco";
+        document.getElementById("max-radius-km").value = "100";
+        document.getElementById("min-magnitude").value = "2.5";
+        document.getElementById("max-magnitude").value = "10";
+        document.getElementById("results-limit").value = "100";
     }
 
     setDefaultDates() {
@@ -10,6 +20,16 @@ class PageManager {
 
         var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
         document.getElementById("start-date").valueAsDate = endDate
+    }
+
+    clearValues() {
+        document.getElementById("location").value = "";
+        document.getElementById("start-date").value = "";
+        document.getElementById("end-date").value = "";
+        document.getElementById("max-radius-km").value = "";
+        document.getElementById("min-magnitude").value = "";
+        document.getElementById("max-magnitude").value = "";
+        document.getElementById("results-limit").value = "";
     }
 
     validateInput() {
