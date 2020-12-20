@@ -6,6 +6,7 @@
             </div>
             <div>
                 <input id="location" type="text" placeholder="San Francisco">
+                <p id="location-error" class="error-message hide-message"><br></p>
             </div>
             
             <div class="label">
@@ -13,6 +14,7 @@
             </div>
             <div>
                 <input type="date" id="start-date">
+                <p id="start-date-error" class="error-message hide-message"><br></p>
             </div>
 
             <div class="label">
@@ -20,6 +22,7 @@
             </div>
             <div>
                 <input type="date" id="end-date">
+                <p id="end-date-error" class="error-message hide-message"><br></p>
             </div>
         </div>
 
@@ -28,7 +31,8 @@
                 <label>Search Radius (km)</label>
             </div>
             <div>
-                <input type="number" value="100" id="max-radius-km">
+                <input type="text" value="100" id="max-radius-km">
+                <p id="search-radius-error" class="error-message hide-message"><br></p>
             </div>
 
             <div class="label">
@@ -38,6 +42,7 @@
                 <input type="number" value="2.5" min="0" step="0.1" id="min-magnitude">
                 <p id="mag-range"> to </p>
                 <input type="number" value="10" max="10" step="0.1" id="max-magnitude">
+                <p id="magnitude-range-error" class="error-message hide-message"><br></p>
             </div>
 
             <div class="label">
@@ -45,6 +50,7 @@
             </div>
             <div>
                 <input type="number" value="100" id="results-limit">
+                <p id="results-limit-error" class="error-message hide-message"><br></p>
             </div>
         </div>
     </div>
@@ -58,7 +64,7 @@
     </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOORh5uUlLn1JkBy8JjKxA2GrA5SbgAWo"></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOORh5uUlLn1JkBy8JjKxA2GrA5SbgAWo"></script> --}}
 <script type="text/javascript" src='/js/DataRequestManager.js'></script>
 <script type="text/javascript" src='/js/PageManager.js'></script>
 <script type="text/javascript" src='/js/MapManager.js'></script>

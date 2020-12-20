@@ -5,23 +5,27 @@ class MapManager {
     initMap() {
         var pm = new PageManager();  // for managing user input
         var drm = new DataRequestManager();  // for getting data from USGS
-        var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
+        // var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
 
         // Default map location: San Francisco
         var longitude = -122.42;
         var latitude = 37.77;
 
         // embed a google map
-        var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 12,
-            center: {lat: latitude, lng: longitude}
-        });
+        // var map = new google.maps.Map(document.getElementById("map"), {
+        //     zoom: 12,
+        //     center: {lat: latitude, lng: longitude}
+        // });
         
         // clicking 'search' will display results on the map based on user input
-        document.getElementById('search-button').addEventListener('click', async () => {
-            var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
-            var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
-            if (response.features.length > 0) { this.displayResults(map, response.features); }  // display results
+        // document.getElementById('search-button').addEventListener('click', async () => {
+        document.getElementById('search-button').addEventListener('click', function() {
+            pm.validateInput();
+            // if (pm.validateInput() === true) {
+            //     var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
+            //     var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
+            //     if (response.features.length > 0) { this.displayResults(map, response.features); }  // display results
+            // }
         });
     };
 
