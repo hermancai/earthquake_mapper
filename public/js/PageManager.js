@@ -20,6 +20,7 @@ class PageManager {
         if (!this.locationValid()) valid = false;
         if (!this.datesValid()) valid = false;
         if (!this.searchRadiusValid()) valid = false;
+        if (!this.resultsLimitValid()) valid = false;
         
         console.log(valid);
 
@@ -47,13 +48,14 @@ class PageManager {
     }
 
     searchRadiusValid() {
-        var str = document.getElementById("max-radius-km").value.trim();
-        if (!str || !/^\-?[0-9]+(e[0-9]+)?(\.[0-9]+)?$/.test(str)) {
-            var errorMessage = document.getElementById("search-radius-error");
-            errorMessage.innerHTML = "Enter a number (0 - 20000).";
-            return false;
+        var input = document.getElementById("max-radius-km").value.trim();
+        if (!isNaN(input)) {
+            if (input > 0 && input <= 20000) {
+                return true;
+            }
         }
-        return true;
+        document.getElementById("search-radius-error").innerHTML = "Enter a number (1 - 20000).";
+        return false;
     }
 
     datesValid() {
@@ -120,5 +122,16 @@ class PageManager {
             valid = false;
         }
         return valid;
+    }
+
+    resultsLimitValid() {
+        var input = document.getElementById("results-limit").value.trim();
+        if (!isNaN(input)) {
+            if (input % 1 == 0 && input > 0 && input <= 20000) {
+                return true;
+            }
+        }
+        document.getElementById("results-limit-error").innerHTML = "Enter a whole number (1 - 20000)."
+        return false;
     }
 }
