@@ -19,20 +19,9 @@ class MapManager {
         
         // clicking 'search' will display results on the map based on user input
         document.getElementById('search-button').addEventListener('click', async () => {
-            var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map); 
+            var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
             var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
-
-            if (response.features.length > 0) {
-                var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
-
-                // draw results on the map
-                for (var i = 0; i < response.features.length; i++) {
-                    var coords = response.features[i].geometry.coordinates;
-                    var magnitude = response.features[i].properties.mag;
-                    this.drawCircle(map, bounds, coords, magnitude);
-                }
-                map.fitBounds(bounds);  // change map zoom level based on results
-            }
+            if (response.features.length > 0) { this.displayResults(map, response.features); }  // display results
         });
     };
 
@@ -65,6 +54,19 @@ class MapManager {
         return {latitude: response.latitude, longitude: response.longitude};
     };
 
+    // for each USGS response, draw on the map
+    displayResults(map, results) {
+        var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
+
+        // draw results on the map
+        for (var i = 0; i < results.length; i++) {
+            var coords = results[i].geometry.coordinates;
+            var magnitude = results[i].properties.mag;
+            this.drawCircle(map, bounds, coords, magnitude);
+        }
+        map.fitBounds(bounds);  // change map zoom level based on results
+    }
+
     // draw a circle on the map given event info
     drawCircle(map, bounds, coords, magnitude) {
         var eventCenter = { lat: coords[1], lng: coords[0] }  // maps api LatLngLiteral
@@ -79,7 +81,7 @@ class MapManager {
             radius: Math.pow(2, magnitude) * 250,
             center: eventCenter,
         })
-    }
+    };
 }
 
 var mm = new MapManager();
