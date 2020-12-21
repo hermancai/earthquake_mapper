@@ -39,9 +39,9 @@
                 <label>Magnitude Range</label>
             </div>
             <div>
-                <input type="number" min="0" step="0.1" id="min-magnitude">
+                <input type="text" id="min-magnitude">
                 <p id="mag-range"> to </p>
-                <input type="number" max="10" step="0.1" id="max-magnitude">
+                <input type="text" id="max-magnitude">
                 <p id="magnitude-range-error" class="error-message hide-message"><br></p>
             </div>
 
@@ -55,8 +55,13 @@
         </div>
     </div>
 
-    <div><button id="default-button">Default Values</button><button id="clear-button">Clear</button></div>
-    <div><button id="search-button">Search</button></div>
+    <div id="button-container">
+        <div>
+            <button id="default-button">Default Values</button>
+            <button id="clear-button">Clear</button>
+        </div>
+        <div><button id="search-button">Search</button></div>
+    </div>    
 
     <div id="map-container">
         <div id="map"></div>
