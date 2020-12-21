@@ -12,7 +12,7 @@ class PageManager {
         document.getElementById("max-radius-km").value = "100";
         document.getElementById("min-magnitude").value = "2.5";
         document.getElementById("max-magnitude").value = "10";
-        document.getElementById("results-limit").value = "100";
+        document.getElementById("results-limit").value = "50";
     }
 
     // set the default date values
@@ -160,7 +160,7 @@ class PageManager {
     magnitudeRangeValid() {
         var minMag = document.getElementById("min-magnitude").value;
         var maxMag = document.getElementById("max-magnitude").value;
-        
+
         if (!isNaN(minMag) && !isNaN(maxMag)) {
             minMag = parseFloat(minMag);
             maxMag = parseFloat(maxMag);
