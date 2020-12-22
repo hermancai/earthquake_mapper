@@ -9,10 +9,10 @@ class PageManager {
     setDefaultValues = () => {
         this.setDefaultDates();
         document.getElementById("location").value = "San Francisco";
-        document.getElementById("max-radius-km").value = "100";
-        document.getElementById("min-magnitude").value = "2.5";
+        document.getElementById("max-radius-km").value = "50";
+        document.getElementById("min-magnitude").value = "1";
         document.getElementById("max-magnitude").value = "10";
-        document.getElementById("results-limit").value = "50";
+        document.getElementById("results-limit").value = "20";
     }
 
     // set the default date values
