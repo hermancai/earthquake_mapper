@@ -25,7 +25,6 @@ class MapManager {
                 var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
                 document.getElementById("request-message").innerHTML = "Quake Events Found: " + response.features.length;
                 if (response.features.length > 0) {
-                    console.log(typeof(latitude), latitude);
                     this.displayResults(map, latitude, longitude, response.features); 
                 }
             };
@@ -100,14 +99,17 @@ class MapManager {
         var eventCenter = { lat: coords[1], lng: coords[0] }  // maps api LatLngLiteral
         bounds.extend(eventCenter);  // update zoom level to fit existing results
 
-        const eventCircle = new google.maps.Circle({
-            map,
-            fillColor: "red",
-            fillOpacity: 0.3,
-            strokeColor: "white",
-            strokeWeight: 0.5,
-            radius: Math.pow(2, magnitude) * 350,
-            center: eventCenter,
+        const eventCircle = new google.maps.Marker({
+            position: eventCenter,
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                scale: Math.pow(2, magnitude) / 2,
+                fillColor: "red",
+                fillOpacity: 0.25,
+                strokeColor: "white",
+                strokeWeight: 0.5,
+            },
+            map: map,
         })
 
         this.markers.push(eventCircle);
@@ -120,9 +122,9 @@ class MapManager {
             content: title + "<br>" + new Date(time).toString(),
             position: eventCircle.center,
         });
-        
-        google.maps.event.addListener(eventCircle, 'mouseover', function(ev) { infoWindow.open(map); });
-        google.maps.event.addListener(eventCircle, 'mouseout', function(ev) { infoWindow.close(); });
+
+        eventCircle.addListener("mouseover", () => { infoWindow.open(map, eventCircle) });
+        eventCircle.addListener("mouseout", () => { infoWindow.close() });
     };
 
     // remove all old markers from the map after new search
