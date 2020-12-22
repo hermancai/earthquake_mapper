@@ -1,5 +1,7 @@
 class MapManager {
-    constructor() {}
+    constructor() {
+        this.markers = [];
+    }
 
     // on page load, initialize a map and search button
     initMap() {
@@ -20,6 +22,7 @@ class MapManager {
         // clicking 'search' will display results on the map based on user input
         document.getElementById('search-button').addEventListener('click', async () => {
             if (pm.validateInput() === true) {
+                this.removeMarkers();
                 var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
                 var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
                 document.getElementById("request-message").innerHTML = "Quake Events Found: " + response.features.length;
@@ -30,8 +33,10 @@ class MapManager {
 
     // async search for the location and return location coordinates
     async searchLocation(geocoder, map) {
+        console.log(this);
         return new Promise(function(resolve, reject) {
             var address = document.getElementById("location").value;
+            console.log(this);
 
             geocoder.geocode({'address': address}, function(results, status) {
                 if (status === 'OK') {
@@ -42,6 +47,7 @@ class MapManager {
                         map: map,
                         position: results[0].geometry.location,
                     });
+                    console.log(this);
             
                     var coords = results[0].geometry.location;  
                     resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
@@ -104,6 +110,7 @@ class MapManager {
             center: eventCenter,
         })
 
+        this.markers.push(eventCircle);
         this.displayEventInfo(map, eventCircle, eventInfo.properties.title, eventInfo.properties.time);
     }
 
@@ -117,6 +124,13 @@ class MapManager {
         google.maps.event.addListener(eventCircle, 'mouseover', function(ev) { infoWindow.open(map); });
         google.maps.event.addListener(eventCircle, 'mouseout', function(ev) { infoWindow.close(); });
     };
+
+    removeMarkers() {
+        for (var i = 0; i < this.markers.length; i++) {
+            this.markers[i].setMap(null);
+        }
+        this.markers = [];
+    }
 }
 
 var mm = new MapManager();
