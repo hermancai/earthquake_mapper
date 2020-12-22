@@ -22,6 +22,7 @@ class MapManager {
             if (pm.validateInput() === true) {
                 var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
                 var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
+                document.getElementById("request-message").innerHTML = "Quake Events Found: " + response.features.length;
                 if (response.features.length > 0) { this.displayResults(map, response.features); }  // display results
             };
         });
@@ -29,10 +30,9 @@ class MapManager {
 
     // async search for the location and return location coordinates
     async searchLocation(geocoder, map) {
-        var address = document.getElementById("location").value;
-        
-        var getCoordinates = new Promise(function(resolve, reject) {
-            // upon successful search, the geocoder returns an object containing info about location
+        return new Promise(function(resolve, reject) {
+            var address = document.getElementById("location").value;
+
             geocoder.geocode({'address': address}, function(results, status) {
                 if (status === 'OK') {
                     map.setCenter(results[0].geometry.location);
@@ -45,15 +45,35 @@ class MapManager {
             
                     var coords = results[0].geometry.location;  
                     resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
-            
                 } else {
                     reject(status);
                 }
             });
         })
+        // var address = document.getElementById("location").value;
+        // var getCoordinates = new Promise(function(resolve, reject) {
+        //     // upon successful search, the geocoder returns an object containing info about location
+        //     geocoder.geocode({'address': address}, function(results, status) {
+        //         if (status === 'OK') {
+        //             map.setCenter(results[0].geometry.location);
+            
+        //             // create a pin marker for the searched location
+        //             var marker = new google.maps.Marker({
+        //                 map: map,
+        //                 position: results[0].geometry.location,
+        //             });
+            
+        //             var coords = results[0].geometry.location;  
+        //             resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
+            
+        //         } else {
+        //             reject(status);
+        //         }
+        //     });
+        // })
 
-        var response = await getCoordinates.catch((err) => { console.log(err); });
-        return {latitude: response.latitude, longitude: response.longitude};
+        // var response = await getCoordinates.catch((err) => { console.log(err); });
+        // return {latitude: response.latitude, longitude: response.longitude};
     };
 
     // for each USGS response, draw on the map
