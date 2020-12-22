@@ -33,12 +33,10 @@ class MapManager {
 
     // async search for the location and return location coordinates
     async searchLocation(geocoder, map) {
-        console.log(this);
-        return new Promise(function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             var address = document.getElementById("location").value;
-            console.log(this);
 
-            geocoder.geocode({'address': address}, function(results, status) {
+            geocoder.geocode({'address': address}, (results, status) => {
                 if (status === 'OK') {
                     map.setCenter(results[0].geometry.location);
             
@@ -47,7 +45,7 @@ class MapManager {
                         map: map,
                         position: results[0].geometry.location,
                     });
-                    console.log(this);
+                    this.markers.push(marker);
             
                     var coords = results[0].geometry.location;  
                     resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
