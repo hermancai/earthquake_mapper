@@ -85,15 +85,16 @@ class MapManager {
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
         bounds.extend({ lat: parseFloat(latitude), lng: parseFloat(longitude) })
 
+        var maxMagnitude = results[0].properties.mag;
         // draw results on the map
         for (var i = 0; i < results.length; i++) {
-            this.drawCircle(map, bounds, results[i]);
+            this.drawCircle(map, bounds, results[i], maxMagnitude);
         }
         map.fitBounds(bounds);  // change map zoom level based on results
     }
 
     // draw a circle on the map given event info
-    drawCircle(map, bounds, eventInfo) {
+    drawCircle(map, bounds, eventInfo, maxMagnitude) {
         var coords = eventInfo.geometry.coordinates;
         var magnitude = eventInfo.properties.mag;
         var eventCenter = { lat: coords[1], lng: coords[0] }  // maps api LatLngLiteral
@@ -103,7 +104,7 @@ class MapManager {
             position: eventCenter,
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: Math.pow(2, magnitude) / 2,
+                scale: magnitude * 10,
                 fillColor: "red",
                 fillOpacity: 0.25,
                 strokeColor: "white",
