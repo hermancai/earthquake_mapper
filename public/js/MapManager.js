@@ -9,11 +9,9 @@ class MapManager {
         var drm = new DataRequestManager();  // for getting data from USGS
         var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
 
-        // Default map location: San Francisco
+        // embed google map. Default location: San Francisco
         var longitude = -122.42;
         var latitude = 37.77;
-
-        // embed a google map
         var map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
             center: {lat: latitude, lng: longitude}
@@ -26,7 +24,10 @@ class MapManager {
                 var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
                 var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
                 document.getElementById("request-message").innerHTML = "Quake Events Found: " + response.features.length;
-                if (response.features.length > 0) { this.displayResults(map, response.features); }  // display results
+                if (response.features.length > 0) {
+                    console.log(typeof(latitude), latitude);
+                    this.displayResults(map, latitude, longitude, response.features); 
+                }
             };
         });
     };
@@ -81,8 +82,9 @@ class MapManager {
     };
 
     // for each USGS response, draw on the map
-    displayResults(map, results) {
+    displayResults(map, latitude, longitude, results) {
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
+        bounds.extend({ lat: parseFloat(latitude), lng: parseFloat(longitude) })
 
         // draw results on the map
         for (var i = 0; i < results.length; i++) {
@@ -101,10 +103,10 @@ class MapManager {
         const eventCircle = new google.maps.Circle({
             map,
             fillColor: "red",
-            fillOpacity: 0.25,
+            fillOpacity: 0.3,
             strokeColor: "white",
             strokeWeight: 0.5,
-            radius: Math.pow(2, magnitude) * 250,
+            radius: Math.pow(2, magnitude) * 350,
             center: eventCenter,
         })
 
@@ -123,6 +125,7 @@ class MapManager {
         google.maps.event.addListener(eventCircle, 'mouseout', function(ev) { infoWindow.close(); });
     };
 
+    // remove all old markers from the map after new search
     removeMarkers() {
         for (var i = 0; i < this.markers.length; i++) {
             this.markers[i].setMap(null);
