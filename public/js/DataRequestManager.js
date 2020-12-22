@@ -4,7 +4,7 @@ class DataRequestManager {
 
     // Gather user input from the page to create a URL.
     buildURL(latitude, longitude) {
-        var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson";
+        var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude";
         var startDate = "&starttime=" + document.getElementById("start-date").value;
         var endDate = "&endtime=" + document.getElementById("end-date").value;
         var coordinates = "&latitude=" + latitude + "&longitude=" + longitude;
