@@ -18,7 +18,9 @@ class MapManager {
         });
         
         // clicking 'search' will display results on the map based on user input
-        document.getElementById('search-button').addEventListener('click', async () => {
+        var searchButton = document.getElementById("search-button");
+        searchButton.addEventListener("click", async () => {
+            this.lockSearchButton(searchButton);
             if (pm.validateInput() === true) {
                 var requestMessage = document.getElementById("request-message");
                 // wait for google maps to return location info
@@ -49,6 +51,14 @@ class MapManager {
             };
         });
     };
+
+    // temp disable search button after clicking to prevent multiple clicks
+    lockSearchButton(button) {
+        button.setAttribute("disabled", true);
+        setTimeout(function() {
+            button.removeAttribute("disabled");
+        }, 5000)
+    }
 
     // async search for the location and return location coordinates
     async searchLocation(geocoder, map) {
