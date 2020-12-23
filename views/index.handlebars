@@ -1,1 +1,78 @@
-<h1>test</h1>
+<div id="container">
+    <div id="input-container">
+        <div id="left-grid">
+            <div class="label">
+                <label>Location</label>
+            </div>
+            <div>
+                <input id="location" type="text">
+                <p id="location-error" class="error-message"><br></p>
+            </div>
+            
+            <div class="label">
+                <label>Start Date (UTC)</label>
+            </div>
+            <div>
+                <input type="date" id="start-date">
+                <p id="start-date-error" class="error-message"><br></p>
+            </div>
+
+            <div class="label">
+                <label>End Date (UTC)</label>
+            </div>
+            <div>
+                <input type="date" id="end-date">
+                <p id="end-date-error" class="error-message"><br></p>
+            </div>
+        </div>
+
+        <div id="right-grid">
+            <div class="label">
+                <label>Search Radius (km)</label>
+            </div>
+            <div>
+                <input type="text" id="max-radius-km">
+                <p id="search-radius-error" class="error-message"><br></p>
+            </div>
+
+            <div class="label">
+                <label>Magnitude Range</label>
+            </div>
+            <div>
+                <input type="text" id="min-magnitude">
+                <p id="mag-range"> to </p>
+                <input type="text" id="max-magnitude">
+                <p id="magnitude-range-error" class="error-message"><br></p>
+            </div>
+
+            <div class="label">
+                <label>Results Limit</label>
+            </div>
+            <div>
+                <input type="text" id="results-limit">
+                <p id="results-limit-error" class="error-message"><br></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="button-container">
+        <div>
+            <button id="default-button">Default Values</button>
+            <button id="clear-button">Clear</button>
+        </div>
+        <div>
+            <button id="search-button">Search</button>
+            <p id="request-message"></p>
+        </div>
+    </div>    
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOORh5uUlLn1JkBy8JjKxA2GrA5SbgAWo"></script>
+<script type="text/javascript" src='/js/DataRequestManager.js'></script>
+<script type="text/javascript" src='/js/PageManager.js'></script>
+<script type="text/javascript" src='/js/MapManager.js'></script>
+<link rel="stylesheet" type="text/css" href="/css/index.css">

@@ -1,0 +1,52 @@
+#container {
+    width: 80%;
+    margin: auto;
+}
+
+#input-container {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+#left-grid, #right-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
+div.label { 
+    text-align: right; 
+}
+
+div.label:after { 
+    content: ":"; 
+}
+
+#map-container {
+    height: 400px;
+    border: 1px solid black;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+#mag-range {
+    display: inline;
+}
+
+.error-message {
+    color: red;
+    margin: 0;
+}
+
+#request-message {
+    display: inline-block;
+}
+
+.request-error {
+    color: red;
+}
