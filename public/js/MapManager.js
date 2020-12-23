@@ -14,7 +14,7 @@ class MapManager {
         var latitude = 37.77;
         var map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
-            center: {lat: latitude, lng: longitude}
+            center: { lat: latitude, lng: longitude }
         });
         
         // clicking 'search' will display results on the map based on user input
@@ -24,6 +24,10 @@ class MapManager {
                 // wait for google maps to return location info
                 try {
                     var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
+                    latitude = parseFloat(latitude);
+                    longitude = parseFloat(longitude);
+                    this.removeMarkers();
+                    this.addLocationMarker(map, latitude, longitude);
                 } catch(err) {
                     requestMessage.innerHTML = "Google Maps Request Error: " + err;
                     return;
@@ -37,7 +41,6 @@ class MapManager {
                     return;
                 }
 
-                this.removeMarkers();
                 requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
                 if (response.features.length > 0) {
                     requestMessage.innerHTML += "<br>Hover over each quake circle on the map for more info.";
@@ -54,16 +57,9 @@ class MapManager {
 
             geocoder.geocode({'address': address}, (results, status) => {
                 if (status === 'OK') {
-                    map.setCenter(results[0].geometry.location);
-            
-                    // create a pin marker for the searched location
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: results[0].geometry.location,
-                    });
-                    this.markers.push(marker);
-            
-                    var coords = results[0].geometry.location;  
+                    var coords = results[0].geometry.location;  // LatLng object
+                    map.setCenter(coords);
+                     
                     resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
                 } else {
                     reject(status);
@@ -72,10 +68,19 @@ class MapManager {
         })
     };
 
+    // create a pin marker for the searched location
+    addLocationMarker(map, latitude, longitude) {
+        var marker = new google.maps.Marker({
+            map: map,
+            position: { lat: latitude, lng: longitude },
+        });
+        this.markers.push(marker);
+    }
+
     // for each USGS response, draw on the map
     displayResults(map, latitude, longitude, results) {
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
-        bounds.extend({ lat: parseFloat(latitude), lng: parseFloat(longitude) })
+        bounds.extend({ lat: latitude, lng: longitude });
 
         // draw results on the map
         for (var i = 0; i < results.length; i++) {
