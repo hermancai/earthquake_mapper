@@ -44,5 +44,9 @@ div.label:after {
 }
 
 #request-message {
-    display: inline;
+    display: inline-block;
+}
+
+.request-error {
+    color: red;
 }

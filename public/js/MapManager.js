@@ -31,6 +31,7 @@ class MapManager {
                     this.removeMarkers();
                     this.addLocationMarker(map, latitude, longitude);
                 } catch(err) {
+                    requestMessage.classList.add("request-error");
                     requestMessage.innerHTML = "Google Maps Request Error: " + err;
                     return;
                 }
@@ -39,13 +40,16 @@ class MapManager {
                 try {
                     var response = await drm.getData(latitude, longitude);
                 } catch(err) {
+                    requestMessage.classList.add("request-error");
                     requestMessage.innerHTML = "USGS Request Error: " + err;
                     return;
                 }
 
+                requestMessage.classList.remove("request-error");
                 requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
                 if (response.features.length > 0) {
-                    requestMessage.innerHTML += "<br>Hover over each quake circle on the map for more info.";
+                    requestMessage.innerHTML += "<br>Hover over each quake circle on the map for more info." + 
+                                                "<br>Zoom in on the map for more precise locations.";
                     this.displayResults(map, latitude, longitude, response.features); 
                 }
             };
