@@ -20,11 +20,27 @@ class MapManager {
         // clicking 'search' will display results on the map based on user input
         document.getElementById('search-button').addEventListener('click', async () => {
             if (pm.validateInput() === true) {
+                var requestMessage = document.getElementById("request-message");
+                // wait for google maps to return location info
+                try {
+                    var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
+                } catch(err) {
+                    requestMessage.innerHTML = "Google Maps Request Error: " + err;
+                    return;
+                }
+                
+                // wait for USGS to return JSON response
+                try {
+                    var response = await drm.getData(latitude, longitude);
+                } catch(err) {
+                    requestMessage.innerHTML = "USGS Request Error: " + err;
+                    return;
+                }
+
                 this.removeMarkers();
-                var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
-                var response = await drm.getData(latitude, longitude);  // wait for USGS to return JSON response
-                document.getElementById("request-message").innerHTML = "Quake Events Found: " + response.features.length;
+                requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
                 if (response.features.length > 0) {
+                    requestMessage.innerHTML += "<br>Hover over each quake circle on the map for more info.";
                     this.displayResults(map, latitude, longitude, response.features); 
                 }
             };
@@ -54,30 +70,6 @@ class MapManager {
                 }
             });
         })
-        // var address = document.getElementById("location").value;
-        // var getCoordinates = new Promise(function(resolve, reject) {
-        //     // upon successful search, the geocoder returns an object containing info about location
-        //     geocoder.geocode({'address': address}, function(results, status) {
-        //         if (status === 'OK') {
-        //             map.setCenter(results[0].geometry.location);
-            
-        //             // create a pin marker for the searched location
-        //             var marker = new google.maps.Marker({
-        //                 map: map,
-        //                 position: results[0].geometry.location,
-        //             });
-            
-        //             var coords = results[0].geometry.location;  
-        //             resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
-            
-        //         } else {
-        //             reject(status);
-        //         }
-        //     });
-        // })
-
-        // var response = await getCoordinates.catch((err) => { console.log(err); });
-        // return {latitude: response.latitude, longitude: response.longitude};
     };
 
     // for each USGS response, draw on the map
@@ -85,18 +77,18 @@ class MapManager {
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
         bounds.extend({ lat: parseFloat(latitude), lng: parseFloat(longitude) })
 
-        var maxMagnitude = results[0].properties.mag;
         // draw results on the map
         for (var i = 0; i < results.length; i++) {
-            this.drawCircle(map, bounds, results[i], maxMagnitude);
+            this.drawCircle(map, bounds, results[i]);
         }
         map.fitBounds(bounds);  // change map zoom level based on results
     }
 
     // draw a circle on the map given event info
-    drawCircle(map, bounds, eventInfo, maxMagnitude) {
+    drawCircle(map, bounds, eventInfo) {
         var coords = eventInfo.geometry.coordinates;
         var magnitude = eventInfo.properties.mag;
+
         var eventCenter = { lat: coords[1], lng: coords[0] }  // maps api LatLngLiteral
         bounds.extend(eventCenter);  // update zoom level to fit existing results
 
