@@ -39,7 +39,7 @@ class PageManager {
     validateInput() {
         var valid = true;
 
-        for (var element of document.querySelectorAll(".error-message")) this.clearErrorMessage(element);
+        for (var element of document.querySelectorAll(".error-message")) element.innerHTML = "<br>";
 
         if (!this.locationValid()) valid = false;
         if (!this.datesValid()) valid = false;
@@ -47,22 +47,7 @@ class PageManager {
         if (!this.resultsLimitValid()) valid = false;
         if (!this.magnitudeRangeValid()) valid = false;
         
-        for (var element of document.querySelectorAll(".error-message")) this.displayErrorMessage(element);
-
         return valid;
-    }
-
-    // remove error messages from page
-    clearErrorMessage(element) {
-        element.innerHTML = "<br>";
-        element.classList.remove("fade-in");
-        element.classList.add("hide-message");
-    }
-
-    // show error messages on page
-    displayErrorMessage(element) {
-        element.classList.remove("hide-message");
-        element.classList.add("fade-in");
     }
 
     // check that the location input is not empty

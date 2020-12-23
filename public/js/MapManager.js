@@ -96,7 +96,7 @@ class MapManager {
             position: eventCenter,
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: magnitude * 10,
+                scale: magnitude * 5,
                 fillColor: "red",
                 fillOpacity: 0.25,
                 strokeColor: "white",
