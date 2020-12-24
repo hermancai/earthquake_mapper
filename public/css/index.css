@@ -1,19 +1,20 @@
 #container {
-    width: 80%;
+    padding: 2% 5% 2% 5%;
     margin: auto;
+    display: flex;
 }
 
 #input-container {
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-}
-
-#left-grid, #right-grid {
-    flex: 1;
     display: grid;
     grid-template-columns: max-content max-content;
     grid-gap: 5px;
+    float: left;
+}
+
+#map-container {
+    margin-left: 20px;
+    border: 1px solid black;
+    flex: 1;
 }
 
 div.label { 
@@ -22,11 +23,6 @@ div.label {
 
 div.label:after { 
     content: ":"; 
-}
-
-#map-container {
-    height: 400px;
-    border: 1px solid black;
 }
 
 #map {
