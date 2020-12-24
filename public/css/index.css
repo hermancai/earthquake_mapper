@@ -1,3 +1,4 @@
+/* containers */
 #container {
     padding: 2% 5% 2% 5%;
     margin: auto;
@@ -17,17 +18,31 @@
     flex: 1;
 }
 
+/* buttons */
+button {
+    color: #ffffff;
+    background-color: #205493;
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+button:hover {
+    background-color: #112e51;
+    cursor: pointer;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* form inputs */
 div.label { 
     text-align: right; 
 }
 
 div.label:after { 
     content: ":"; 
-}
-
-#map {
-    height: 100%;
-    width: 100%;
 }
 
 #mag-range {
@@ -39,6 +54,7 @@ div.label:after {
     margin: 0;
 }
 
+/* request message */
 #request-message {
     display: inline-block;
 }

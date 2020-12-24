@@ -35,6 +35,17 @@ class PageManager {
         document.getElementById("results-limit").value = "";
     }
 
+    // temp disable button after clicking to prevent multiple clicks
+    lockButton(button) {
+        var prevColor = button.style.backgroundColor
+        button.setAttribute("disabled", true);
+        button.style.backgroundColor = "#666666";
+        setTimeout(function() {
+            button.removeAttribute("disabled");
+            button.style.backgroundColor = prevColor;
+        }, 3000)
+    }
+
     // validate each input value
     validateInput() {
         var valid = true;
