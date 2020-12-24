@@ -17,13 +17,21 @@
     flex: 1;
 }
 
+#button-container {
+    margin-top: 10px;
+}
+
+#search-button-container {
+    display: flex;
+    align-items: center;
+}
+
 /* buttons */
 button {
     color: #ffffff;
     background-color: #205493;
     border: none;
     border-radius: 4px;
-    padding: 5px;
 }
 
 button:hover {
@@ -33,6 +41,15 @@ button:hover {
 
 button:active {
     transform: translateY(1px);
+}
+
+#default-button, #clear-button {
+    padding: 4px 15px;
+}
+
+#search-button {
+    padding: 6px 30px;
+    font-size: 1.1em;
 }
 
 /* form inputs */
@@ -72,13 +89,13 @@ div.label:after {
     color: rgb(255, 49, 49);
     margin: 0;
     padding-bottom: 5px;
-    /* font-size: 0.9em; */
     font-style: italic;
 }
 
 /* request message */
 #request-message {
     display: inline-block;
+    margin-left: 10px;
 }
 
 .request-error {
