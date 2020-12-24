@@ -9,7 +9,6 @@
     display: grid;
     grid-template-columns: max-content max-content;
     grid-gap: 5px;
-    float: left;
 }
 
 #map-container {
@@ -37,12 +36,32 @@ button:active {
 }
 
 /* form inputs */
+input {
+    border: 1px solid #666666;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
 div.label { 
     text-align: right; 
+    font-size: 1.1em;
+    padding-top: 2px;
 }
 
 div.label:after { 
     content: ":"; 
+}
+
+#location {
+    width: 100%;
+}
+
+#max-radius-km, #results-limit {
+    width: 50%;
+}
+
+#min-magnitude, #max-magnitude {
+    width: 20%;
 }
 
 #mag-range {
@@ -50,8 +69,11 @@ div.label:after {
 }
 
 .error-message {
-    color: red;
+    color: rgb(255, 49, 49);
     margin: 0;
+    padding-bottom: 5px;
+    /* font-size: 0.9em; */
+    font-style: italic;
 }
 
 /* request message */
