@@ -1,20 +1,27 @@
-/* containers */
 #container {
     padding: 2% 5% 2% 5%;
     margin: auto;
     display: flex;
 }
 
-#input-container {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    grid-gap: 5px;
-}
-
+/* map */
 #map-container {
     margin-left: 20px;
     border: 1px solid black;
     flex: 1;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* buttons */
+button {
+    color: #ffffff;
+    background-color: #205493;
+    border: none;
+    border-radius: 4px;
 }
 
 #button-container {
@@ -24,14 +31,7 @@
 #search-button-container {
     display: flex;
     align-items: center;
-}
-
-/* buttons */
-button {
-    color: #ffffff;
-    background-color: #205493;
-    border: none;
-    border-radius: 4px;
+    margin-top: 15px;
 }
 
 button:hover {
@@ -53,6 +53,12 @@ button:active {
 }
 
 /* form inputs */
+#input-container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
 input {
     border: 1px solid #666666;
     padding: 5px 10px;
@@ -95,7 +101,7 @@ div.label:after {
 /* request message */
 #request-message {
     display: inline-block;
-    margin-left: 10px;
+    margin: 0 0 0 10px;
 }
 
 .request-error {
