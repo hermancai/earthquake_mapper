@@ -7,49 +7,49 @@ class MapManager {
     initMap() {
         var pm = new PageManager();  // for managing user input
         var drm = new DataRequestManager();  // for getting data from USGS
-        var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
+        // var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
 
-        // embed google map. Default location: San Francisco
-        var longitude = -122.42;
-        var latitude = 37.77;
-        var map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 12,
-            center: { lat: latitude, lng: longitude }
-        });
+        // // embed google map. Default location: San Francisco
+        // var longitude = -122.42;
+        // var latitude = 37.77;
+        // var map = new google.maps.Map(document.getElementById("map"), {
+        //     zoom: 12,
+        //     center: { lat: latitude, lng: longitude }
+        // });
         
         // clicking 'search' will display results on the map based on user input
         var searchButton = document.getElementById("search-button");
         searchButton.addEventListener("click", async () => {
             pm.lockButton(searchButton);
             if (pm.validateInput() === true) {
-                var requestMessage = document.getElementById("request-message");
-                // wait for google maps to return location info
-                try {
-                    var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
-                    latitude = parseFloat(latitude);
-                    longitude = parseFloat(longitude);
-                    this.removeMarkers();
-                    this.addLocationMarker(map, latitude, longitude);
-                } catch(err) {
-                    requestMessage.classList.add("request-error");
-                    requestMessage.innerHTML = "Google Maps Request Error: " + err;
-                    return;
-                }
+                // var requestMessage = document.getElementById("request-message");
+                // // wait for google maps to return location info
+                // try {
+                //     var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
+                //     latitude = parseFloat(latitude);
+                //     longitude = parseFloat(longitude);
+                //     this.removeMarkers();
+                //     this.addLocationMarker(map, latitude, longitude);
+                // } catch(err) {
+                //     requestMessage.classList.add("request-error");
+                //     requestMessage.innerHTML = "Google Maps Request Error: " + err;
+                //     return;
+                // }
                 
-                // wait for USGS to return JSON response
-                try {
-                    var response = await drm.getData(latitude, longitude);
-                } catch(err) {
-                    requestMessage.classList.add("request-error");
-                    requestMessage.innerHTML = "USGS Request Error: " + err;
-                    return;
-                }
+                // // wait for USGS to return JSON response
+                // try {
+                //     var response = await drm.getData(latitude, longitude);
+                // } catch(err) {
+                //     requestMessage.classList.add("request-error");
+                //     requestMessage.innerHTML = "USGS Request Error: " + err;
+                //     return;
+                // }
 
-                requestMessage.classList.remove("request-error");
-                requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
-                if (response.features.length > 0) {
-                    this.displayResults(map, latitude, longitude, response.features); 
-                }
+                // requestMessage.classList.remove("request-error");
+                // requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
+                // if (response.features.length > 0) {
+                //     this.displayResults(map, latitude, longitude, response.features); 
+                // }
             };
         });
     };
