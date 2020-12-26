@@ -2,11 +2,11 @@
     padding: 2% 5% 2% 5%;
     margin: auto;
     display: flex;
+    flex-wrap: wrap;
 }
 
 /* map */
 #map-container {
-    margin-left: 20px;
     border: 1px solid black;
     flex: 1;
     min-width: 500px;
@@ -33,6 +33,7 @@ button {
     display: flex;
     align-items: center;
     margin-top: 15px;
+    margin-bottom: 20px;
 }
 
 button:hover {
@@ -82,7 +83,7 @@ div.label:after {
 }
 
 #location {
-    width: 100%;
+    width: 75%;
 }
 
 #max-radius-km, #results-limit {
