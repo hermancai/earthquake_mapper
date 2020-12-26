@@ -1,8 +1,55 @@
 // The PageManager class manages user input on the page.
 class PageManager {
-    constructor() {
+    constructor() {}
+
+    // initialize map and buttons
+    loadPage() {
+        var drm = new DataRequestManager();  // for getting data from USGS
+        var mm = new MapManager();  // for creating map and map markers
+        var geocoder = new google.maps.Geocoder();  // for getting result data after searching google maps
+        mm.initMap();
+
         document.getElementById("default-button").addEventListener("click", this.setDefaultValues);
         document.getElementById("clear-button").addEventListener("click", this.clearValues);
+        document.getElementById("search-button").addEventListener("click", this.searchButtonEvent(drm, mm, geocoder));
+    }
+
+    // search google maps then make USGS request. display results
+    searchButtonEvent(drm, mm, geocoder) {
+        return async () => {
+            this.lockButton(document.getElementById("search-button"));
+            if (this.validateInput() === true) {
+                var requestMessage = document.getElementById("request-message");
+                // wait for google maps to return location info
+                try {
+                    var { latitude: latitude, longitude: longitude } = await mm.searchLocation(geocoder);
+                    latitude = parseFloat(latitude);
+                    longitude = parseFloat(longitude);
+                    mm.removeMarkers();
+                    mm.addLocationMarker(latitude, longitude);
+                } catch(err) {
+                    requestMessage.classList.add("request-error");
+                    requestMessage.innerHTML = "Google Maps Request Error: " + err;
+                    return;
+                }
+                
+                // wait for USGS to return JSON response
+                try {
+                    var response = await drm.getData(latitude, longitude);
+                } catch(err) {
+                    requestMessage.classList.add("request-error");
+                    requestMessage.innerHTML = "USGS Request Error: " + err;
+                    return;
+                }
+
+                // display results on map after successful requests
+                requestMessage.classList.remove("request-error");
+                requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
+                if (response.features.length > 0) {
+                    mm.displayResults(latitude, longitude, response.features); 
+                }
+            };
+        }
     }
 
     // fill all inputs with default values
@@ -175,3 +222,6 @@ class PageManager {
         return false;
     }
 }
+
+var pm = new PageManager();
+pm.loadPage();
