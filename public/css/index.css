@@ -100,7 +100,9 @@ div.label:after {
 .error-message {
     color: rgb(255, 49, 49);
     margin: 0;
+    padding-top: 2px;
     padding-bottom: 5px;
+    font-size: 0.9em;
     font-style: italic;
 }
 
