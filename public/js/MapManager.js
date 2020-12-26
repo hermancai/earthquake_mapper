@@ -1,68 +1,30 @@
 class MapManager {
     constructor() {
         this.markers = [];
+        this.map = null;
     }
 
-    // on page load, initialize a map and search button
+    // on page load, initialize a map
     initMap() {
-        var pm = new PageManager();  // for managing user input
-        var drm = new DataRequestManager();  // for getting data from USGS
-        var geocoder = new google.maps.Geocoder();  // for getting result data after searching google map
-
-        // embed google map. Default location: San Francisco
+        // Default location: San Francisco
         var longitude = -122.42;
         var latitude = 37.77;
         var map = new google.maps.Map(document.getElementById("map"), {
             zoom: 12,
             center: { lat: latitude, lng: longitude }
         });
-        
-        // clicking 'search' will display results on the map based on user input
-        var searchButton = document.getElementById("search-button");
-        searchButton.addEventListener("click", async () => {
-            pm.lockButton(searchButton);
-            if (pm.validateInput() === true) {
-                var requestMessage = document.getElementById("request-message");
-                // wait for google maps to return location info
-                try {
-                    var { latitude: latitude, longitude: longitude } = await this.searchLocation(geocoder, map);
-                    latitude = parseFloat(latitude);
-                    longitude = parseFloat(longitude);
-                    this.removeMarkers();
-                    this.addLocationMarker(map, latitude, longitude);
-                } catch(err) {
-                    requestMessage.classList.add("request-error");
-                    requestMessage.innerHTML = "Google Maps Request Error: " + err;
-                    return;
-                }
-                
-                // wait for USGS to return JSON response
-                try {
-                    var response = await drm.getData(latitude, longitude);
-                } catch(err) {
-                    requestMessage.classList.add("request-error");
-                    requestMessage.innerHTML = "USGS Request Error: " + err;
-                    return;
-                }
-
-                requestMessage.classList.remove("request-error");
-                requestMessage.innerHTML = "Quake Events Found: " + response.features.length;
-                if (response.features.length > 0) {
-                    this.displayResults(map, latitude, longitude, response.features); 
-                }
-            };
-        });
+        this.map = map;
     };
 
     // async search for the location and return location coordinates
-    async searchLocation(geocoder, map) {
+    async searchLocation(geocoder) {
         return new Promise((resolve, reject) => {
             var address = document.getElementById("location").value;
 
             geocoder.geocode({'address': address}, (results, status) => {
                 if (status === 'OK') {
                     var coords = results[0].geometry.location;  // LatLng object
-                    map.setCenter(coords);
+                    this.map.setCenter(coords);
                      
                     resolve({latitude: coords.lat().toFixed(2), longitude: coords.lng().toFixed(2) })                                        
                 } else {
@@ -73,24 +35,24 @@ class MapManager {
     };
 
     // create a pin marker for the searched location
-    addLocationMarker(map, latitude, longitude) {
+    addLocationMarker(latitude, longitude) {
         var marker = new google.maps.Marker({
-            map: map,
+            map: this.map,
             position: { lat: latitude, lng: longitude },
         });
         this.markers.push(marker);
     }
 
     // for each USGS response, draw on the map
-    displayResults(map, latitude, longitude, results) {
+    displayResults(latitude, longitude, results) {
         var bounds = new google.maps.LatLngBounds();  // for updating map zoom level
         bounds.extend({ lat: latitude, lng: longitude });
 
         // draw results on the map
         for (var i = 0; i < results.length; i++) {
-            this.drawCircle(map, bounds, results[i]);
+            this.drawCircle(this.map, bounds, results[i]);
         }
-        map.fitBounds(bounds);  // change map zoom level based on results
+        this.map.fitBounds(bounds);  // change map zoom level based on results
     }
 
     // draw a circle on the map given event info
@@ -137,6 +99,3 @@ class MapManager {
         this.markers = [];
     }
 }
-
-var mm = new MapManager();
-mm.initMap();
