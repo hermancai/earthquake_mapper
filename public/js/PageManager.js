@@ -1,3 +1,5 @@
+const { request } = require("express");
+
 // The PageManager class manages user input on the page.
 class PageManager {
     constructor() {}
@@ -20,6 +22,7 @@ class PageManager {
             this.lockButton(document.getElementById("search-button"));
             if (this.validateInput() === true) {
                 var requestMessage = document.getElementById("request-message");
+                requestMessage.innerHTML = "Requesting data...";
                 // wait for google maps to return location info
                 try {
                     var { latitude: latitude, longitude: longitude } = await mm.searchLocation(geocoder);
