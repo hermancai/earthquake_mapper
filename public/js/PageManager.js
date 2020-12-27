@@ -1,5 +1,3 @@
-const { request } = require("express");
-
 // The PageManager class manages user input on the page.
 class PageManager {
     constructor() {}
