@@ -115,3 +115,10 @@ div.label:after {
 .request-error {
     color: red;
 }
+
+/* media query for mobile */
+@media only screen and (max-width: 768px) {
+    #container {
+        display: inline-block;
+    }
+  }
