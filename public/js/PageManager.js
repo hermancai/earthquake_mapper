@@ -54,7 +54,7 @@ class PageManager {
     }
 
     // fill all inputs with default values
-    setDefaultValues = () => {
+    setDefaultValues() {
         this.setDefaultDates();
         document.getElementById("location").value = "San Francisco";
         document.getElementById("max-radius-km").value = "50";
