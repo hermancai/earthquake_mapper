@@ -65,11 +65,11 @@ class PageManager {
 
     // set the default date values
     setDefaultDates() {
-        var startDate = new Date();
-        document.getElementById("end-date").valueAsDate = startDate;
+        var endDate = new Date();
+        document.getElementById("end-date").valueAsDate = endDate;
 
-        var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
-        document.getElementById("start-date").valueAsDate = endDate;
+        var startDate = new Date(endDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
+        document.getElementById("start-date").valueAsDate = startDate;
     }
 
     // clear all input values
