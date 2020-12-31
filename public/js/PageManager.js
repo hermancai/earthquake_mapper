@@ -65,11 +65,18 @@ class PageManager {
 
     // set the default date values
     setDefaultDates() {
+        // valueAsDate DOM property does not work on safari. 12/31/2020
+        var convertToString = function(dateInput) {
+            return dateInput.getFullYear() + "-" +
+                ("0"+(dateInput.getMonth()+1)).slice(-2) + "-" +
+                ("0" + dateInput.getDate()).slice(-2);
+        }
+
         var endDate = new Date();
-        document.getElementById("end-date").valueAsDate = endDate;
+        document.getElementById("end-date").value = convertToString(endDate);
 
         var startDate = new Date(endDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
-        document.getElementById("start-date").valueAsDate = startDate;
+        document.getElementById("start-date").value = convertToString(startDate);
     }
 
     // clear all input values
