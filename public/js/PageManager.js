@@ -9,7 +9,7 @@ class PageManager {
         var geocoder = new google.maps.Geocoder();  // for getting result data after searching google maps
         mm.initMap();
 
-        document.getElementById("default-button").addEventListener("click", this.setDefaultValues);
+        document.getElementById("default-button").addEventListener("click", this.setDefaultValues.bind(this));
         document.getElementById("clear-button").addEventListener("click", this.clearValues);
         document.getElementById("search-button").addEventListener("click", this.searchButtonEvent(drm, mm, geocoder));
     }
@@ -69,7 +69,7 @@ class PageManager {
         document.getElementById("end-date").valueAsDate = startDate;
 
         var endDate = new Date(startDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
-        document.getElementById("start-date").valueAsDate = endDate
+        document.getElementById("start-date").valueAsDate = endDate;
     }
 
     // clear all input values
