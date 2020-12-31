@@ -213,7 +213,7 @@ class PageManager {
         if (!isNaN(minMag) && !isNaN(maxMag)) {
             minMag = parseFloat(minMag);
             maxMag = parseFloat(maxMag);
-            if (minMag < maxMag) {
+            if (minMag <= maxMag) {
                 if ((minMag >= 0 && minMag <= 10) && (maxMag >= 0 && maxMag <= 10)) {
                     return true;
                 }
