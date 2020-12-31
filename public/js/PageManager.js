@@ -20,10 +20,10 @@ class PageManager {
             this.lockButton(document.getElementById("search-button"));
             if (this.validateInput() === true) {
                 var requestMessage = document.getElementById("request-message");
-                requestMessage.innerHTML = "Requesting data...";
                 // wait for google maps to return location info
                 try {
                     var { latitude: latitude, longitude: longitude } = await mm.searchLocation(geocoder);
+                    requestMessage.innerHTML = "Requesting data...";
                     latitude = parseFloat(latitude);
                     longitude = parseFloat(longitude);
                     mm.removeMarkers();
