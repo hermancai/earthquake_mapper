@@ -116,9 +116,23 @@ div.label:after {
     color: red;
 }
 
-/* media query for mobile */
+/* media queries */
+@media (max-width: 1076px) {
+    #container {
+        display: inline-block;
+    }
+
+    #map-container {
+        height: 400px;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     #container {
         display: inline-block;
     }
-  }
+
+    #header {
+        width: 100%;
+    }
+}
