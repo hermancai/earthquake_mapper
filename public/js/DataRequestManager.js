@@ -6,7 +6,14 @@ class DataRequestManager {
     buildURL(latitude, longitude) {
         var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude";
         var startDate = "&starttime=" + document.getElementById("start-date").value;
+
         var endDate = "&endtime=" + document.getElementById("end-date").value;
+        var now = new Date();
+        var nowString = now.getFullYear() + "-" + ("0"+(now.getMonth()+1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
+        if (document.getElementById("end-date").value == nowString) {
+            endDate = "";
+        }
+        
         var coordinates = "&latitude=" + latitude + "&longitude=" + longitude;
         var maxRadiusKm = "&maxradiuskm=" + document.getElementById("max-radius-km").value;
         var magnitudeRange = "&minmagnitude=" + document.getElementById("min-magnitude").value
