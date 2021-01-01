@@ -12,7 +12,10 @@ class DataRequestManager {
         var magnitudeRange = "&minmagnitude=" + document.getElementById("min-magnitude").value
                                 + "&maxmagnitude=" + document.getElementById("max-magnitude").value;
         var resultsLimit = "&limit=" + document.getElementById("results-limit").value;
-        return baseURL + startDate + endDate + coordinates + maxRadiusKm + magnitudeRange + resultsLimit;
+
+        baseURL += startDate + endDate + coordinates + maxRadiusKm + magnitudeRange + resultsLimit;
+        console.log(baseURL);
+        return baseURL;
     }
 
     // Async request to USGS and return JSON data.
