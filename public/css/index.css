@@ -8,7 +8,7 @@
 #map-container {
     border: 1px solid black;
     flex: 1;
-    min-width: 500px;
+    min-width: 400px;
 }
 
 #map {
@@ -130,9 +130,5 @@ div.label:after {
 @media only screen and (max-width: 768px) {
     #container {
         display: inline-block;
-    }
-
-    #header {
-        width: 100%;
     }
 }
