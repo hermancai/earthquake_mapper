@@ -131,4 +131,8 @@ div.label:after {
     #container {
         display: inline-block;
     }
+
+    #header {
+        width: 768px;
+    }
 }
