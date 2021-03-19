@@ -71,6 +71,11 @@ input {
     border-radius: 4px;
 }
 
+input[type=checkbox], input[type=checkbox]+label {
+    vertical-align: middle;
+    font-size: 0.9em;
+}
+
 .number-input {
     text-align: center;
 }
