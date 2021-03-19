@@ -58,7 +58,7 @@ class PageManager {
         this.setDefaultDates();
         document.getElementById("location").value = "San Francisco";
         document.getElementById("max-radius-km").value = "50";
-        document.getElementById("min-magnitude").value = "1";
+        document.getElementById("min-magnitude").value = "2";
         document.getElementById("max-magnitude").value = "10";
         document.getElementById("results-limit").value = "20";
     }
