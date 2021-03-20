@@ -5,12 +5,13 @@ class DataRequestManager {
     // Gather user input from the page to create a URL.
     buildURL(latitude, longitude) {
         var baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude";
-        var startDate = "&starttime=" + document.getElementById("start-date").value;
 
+        var startDate = "&starttime=" + document.getElementById("start-date").value;
         var endDate = "&endtime=" + document.getElementById("end-date").value;
-        var now = new Date();
-        var nowString = now.getFullYear() + "-" + ("0"+(now.getMonth()+1)).slice(-2) + "-" + ("0" + now.getDate()).slice(-2);
-        if (document.getElementById("end-date").value == nowString) {
+        if (document.getElementById("start-date-check").checked) {
+            startDate = "";
+        }
+        if (document.getElementById("end-date-check").checked) {
             endDate = "";
         }
         

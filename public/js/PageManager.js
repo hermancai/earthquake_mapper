@@ -12,6 +12,8 @@ class PageManager {
         document.getElementById("default-button").addEventListener("click", this.setDefaultValues.bind(this));
         document.getElementById("clear-button").addEventListener("click", this.clearValues);
         document.getElementById("search-button").addEventListener("click", this.searchButtonEvent(drm, mm, geocoder));
+        document.getElementById("start-date-check").addEventListener("click", this.disableStartDate);
+        document.getElementById("end-date-check").addEventListener("click", this.disableEndDate);
     }
 
     // search google maps then make USGS request. display results
@@ -77,6 +79,16 @@ class PageManager {
 
         var startDate = new Date(endDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
         document.getElementById("start-date").value = convertToString(startDate);
+
+        this.checkDateBoxes();
+    }
+
+    // check default date checkboxes and disable date inputs
+    checkDateBoxes() {
+        document.getElementById("start-date").disabled = true;
+        document.getElementById("end-date").disabled = true;
+        document.getElementById("start-date-check").checked = true;
+        document.getElementById("end-date-check").checked = true;
     }
 
     // clear all input values
@@ -88,6 +100,24 @@ class PageManager {
         document.getElementById("min-magnitude").value = "";
         document.getElementById("max-magnitude").value = "";
         document.getElementById("results-limit").value = "";
+    }
+
+    // disable start date input if checkbox is checked
+    disableStartDate() {
+        if (document.getElementById("start-date-check").checked) {
+            document.getElementById("start-date").disabled = true;
+        } else {
+            document.getElementById("start-date").disabled = false;
+        }
+    }
+
+    // disable end date input if checkbox is checked
+    disableEndDate() {
+        if (document.getElementById("end-date-check").checked) {
+            document.getElementById("end-date").disabled = true;
+        } else {
+            document.getElementById("end-date").disabled = false;
+        }
     }
 
     // temp disable button after clicking to prevent multiple clicks
@@ -145,16 +175,39 @@ class PageManager {
 
     // validate the dates
     datesValid() {
-        var valid = true;
+        var startDateChecked = document.getElementById("start-date-check").checked;
+        var endDateChecked = document.getElementById("end-date-check").checked;
+
+        // auto-valid if both date checkboxes are checked
+        if (startDateChecked && endDateChecked) {
+            return true;
+        }
+
         var today = new Date();
+        var startDate;
+        var endDate;
 
-        // check that start and end dates are not later than today
-        if (!this.startDateValid(today)) valid = false;
-        if (!this.endDateValid(today)) valid = false;
-        if (!valid) return valid;
+        // get end date
+        if (endDateChecked) {
+            endDate = today;
+        } else {
+            if (this.endDateValid(today)) {
+                endDate = new Date(document.getElementById("end-date").value);
+            } else {
+                return false;
+            }
+        }
 
-        var startDate = new Date(document.getElementById("start-date").value);
-        var endDate = new Date(document.getElementById("end-date").value);
+        // get start date
+        if (startDateChecked) {
+            startDate = new Date(endDate.valueOf() - 1000 * 60 * 60 * 24 * 30)  // 30 days ago
+        } else {
+            if (this.startDateValid(today)) {
+                startDate = new Date(document.getElementById("start-date").value);
+            } else {
+                return false;
+            }
+        }
 
         // check that end date is later than start date
         if (startDate >= endDate) {
