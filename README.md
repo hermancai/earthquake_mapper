@@ -5,4 +5,4 @@ Built with Node.js
 Static version hosted on Github Pages: https://hermancai.github.io/earthquake_tracker/
 
 
-![example search](https://github.com/hermancai/earthquake_tracker/blob/main/previews/example1.png?raw=true)
+![example search](https://github.com/hermancai/earthquake_tracker/blob/main/screenshots/example1.png?raw=true)
