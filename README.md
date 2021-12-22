@@ -1,8 +1,13 @@
-# earthquake_tracker
+# earthquake_mapper
+
+Hosted on Github Pages: https://hermancai.github.io/earthquake_mapper/
+
 Uses Google Maps and USGS data to map earthquakes.
-Built with Node.js
 
-Static version hosted on Github Pages: https://hermancai.github.io/earthquake_tracker/
+How to run: Open index.html with a browser
 
+![example search](https://github.com/hermancai/earthquake_tracker/blob/main/images/eqmapper2.png?raw=true)
 
-![example search](https://github.com/hermancai/earthquake_tracker/blob/main/screenshots/example1.png?raw=true)
+![example search](https://github.com/hermancai/earthquake_tracker/blob/main/images/eqmapper1.png?raw=true)
+
+![example search](https://github.com/hermancai/earthquake_tracker/blob/main/images/eqmapper3.png?raw=true)
