@@ -14,6 +14,7 @@ class PageManager {
     document.getElementById("example-button").addEventListener("click", () => {
       this.setDefaultValues();
       fd.clearInvalidMessages();
+      document.getElementById("search-button").click();
     });
     document.getElementById("clear-button").addEventListener("click", this.clearValues);
     document.getElementById("check-start-date").addEventListener("click", this.disableStartDate);
@@ -21,9 +22,6 @@ class PageManager {
 
     this.disableEndDate();
     this.disableStartDate();
-
-    var ttip = new bootstrap.Tooltip(document.getElementById("example-button"));
-    ttip.show();
   }
 
   // search google maps then make USGS request. display results
@@ -62,6 +60,8 @@ class PageManager {
           this.displayResults(mm, response.features, latitude, longitude);
         }
         this.restoreSearchButton();
+
+        document.getElementById("result-message").scrollIntoView();
       }
     };
   }
