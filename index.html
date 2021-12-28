@@ -14,153 +14,94 @@
     <link rel="stylesheet" href="./css/eqmapper.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand navbar-dark bg-dark" id="nav-container">
-      <div class="container-fluid nav-fluid">
-        <div class="nav-fluid">
-          <a class="navbar-brand nav-title" href="#"
-            ><img class="logo" src="./images/favicon.png" alt="favicon" />Earthquake Mapper</a
-          >
+    <div id="page-container">
+      <div id="header-container">
+        <div id="header">
+          <img style="height: 30px" src="./images/favicon.png" alt="favicon" />
+          <h2 style="color: #ffffff; margin: 0">Earthquake Mapper</h2>
         </div>
       </div>
-    </nav>
-    <div id="body-container">
-      <p>Search for earthquake events using these parameters.</p>
-      <div id="page-container">
-        <div id="form-container">
-          <form class="align-items-center" _lpchecked="1">
-            <div class="row align-items-center">
-              <div class="col-sm-12">
-                <div class="form-floating">
-                  <input
-                    class="form-control"
-                    type="text"
-                    id="input-location"
-                    placeholder="Location"
-                    required=""
-                  /><label for="input-location">Location</label>
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <p class="invalid-message" id="invalid-location"><br /></p>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2 custom-padding">
-                <label class="col-form-label" for="input-start-date">Starting Date</label>
-              </div>
-              <div class="col-sm-4"><input class="form-control" type="date" id="input-start-date" /></div>
-              <div class="col-sm-4">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" value="" id="check-start-date" /><label
-                    class="form-check-label"
-                    for="check-start-date"
-                    >30 Days Before</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
-                <p class="invalid-message" id="invalid-start-date"><br /></p>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2 custom-padding">
-                <label class="col-form-label" for="input-end-date">Ending Date</label>
-              </div>
-              <div class="col-sm-4"><input class="form-control" type="date" id="input-end-date" /></div>
-              <div class="col-sm-4">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" value="" id="check-end-date" /><label
-                    class="form-check-label"
-                    for="check-end-date"
-                    >Now</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
-                <p class="invalid-message" id="invalid-end-date"><br /></p>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2"><label class="col-form-label" for="mag-range">Magnitude</label></div>
-              <div class="col-sm-2">
-                <div class="form-floating">
-                  <input class="form-control" type="text" id="mag-min" placeholder="Min" /><label for="mag-min"
-                    >Min</label
-                  >
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div class="form-floating">
-                  <input class="form-control" type="text" id="mag-max" placeholder="Max" /><label for="mag-max"
-                    >Max</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
-                <p class="invalid-message" id="invalid-mag-range"><br /></p>
-              </div>
-            </div>
-            <div class="row align-items-center">
-              <div class="col-sm-4">
-                <div class="form-floating">
-                  <input class="form-control" type="text" id="search-radius" placeholder="Search Radius (km)" /><label
-                    for="search-radius"
-                    >Search Radius (km)</label
-                  >
-                  <p class="invalid-message" id="invalid-search-radius"><br /></p>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-floating">
-                  <input class="form-control" type="text" id="result-limit" placeholder="Result Limit" /><label
-                    for="result-limit"
-                    >Result Limit
-                  </label>
-                  <p class="invalid-message" id="invalid-result-limit"><br /></p>
-                </div>
-              </div>
-            </div>
-            <hr class="page-divider" />
-            <div class="row align-items-center" id="button-row">
-              <div class="col-sm-2">
-                <button class="btn btn-outline-primary w-100" type="button" id="search-button">
-                  <span class="spinner-border spinner-border-sm" id="button-spinner"></span
-                  ><span id="button-text">Search</span>
-                </button>
-              </div>
-              <div class="col-sm-2">
-                <button
-                  class="btn btn-outline-secondary w-100"
-                  type="button"
-                  id="example-button"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="bottom"
-                  title=""
-                  data-bs-original-title='Click on "Example" then "Search" to see a sample earthquake map.'
-                >
-                  Example
-                </button>
-              </div>
-              <div class="col-sm-2">
-                <button class="btn btn-outline-danger w-100" type="button" id="clear-button">Clear</button>
-              </div>
-            </div>
-          </form>
+
+      <div id="form-container">
+        <div style="display: flex; flex-direction: column">
+          <p style="font-weight: bold">Search for earthquake events using these parameters.</p>
+          <p style="font-style: italic">
+            To see a sample map, click <span id="example-button" class="text-primary">here</span>.
+          </p>
         </div>
-        <div id="map-container">
-          <div id="map" style="position: relative; overflow: hidden"></div>
+
+        <div id="input-container">
+          <div class="form-floating">
+            <input class="form-control" type="text" id="input-location" placeholder="Location" required="" /><label
+              for="input-location"
+              >Location</label
+            >
+          </div>
+          <p class="invalid-message" id="invalid-location"><br /></p>
+
+          <label class="col-form-label" for="input-start-date">Starting Date</label>
+          <input class="form-control" type="date" id="input-start-date" />
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="check-start-date" /><label
+              class="form-check-label"
+              for="check-start-date"
+              >30 Days Before</label
+            >
+          </div>
+          <p class="invalid-message" id="invalid-start-date"><br /></p>
+
+          <label class="col-form-label" for="input-end-date">Ending Date</label>
+          <input class="form-control" type="date" id="input-end-date" />
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" value="" id="check-end-date" /><label
+              class="form-check-label"
+              for="check-end-date"
+              >Now</label
+            >
+          </div>
+          <p class="invalid-message" id="invalid-end-date"><br /></p>
+
+          <label class="col-form-label" for="mag-range">Magnitude</label>
+          <div class="form-floating">
+            <input class="form-control" type="text" id="mag-min" placeholder="Min" /><label for="mag-min">Min</label>
+          </div>
+          <div class="form-floating">
+            <input class="form-control" type="text" id="mag-max" placeholder="Max" /><label for="mag-max">Max</label>
+          </div>
+          <p class="invalid-message" id="invalid-mag-range"><br /></p>
+
+          <div class="form-floating">
+            <input class="form-control" type="text" id="search-radius" placeholder="Search Radius (km)" /><label
+              for="search-radius"
+              >Search Radius (km)</label
+            >
+            <p class="invalid-message" id="invalid-search-radius"><br /></p>
+          </div>
+
+          <div class="form-floating">
+            <input class="form-control" type="text" id="result-limit" placeholder="Result Limit" /><label
+              for="result-limit"
+              >Result Limit
+            </label>
+            <p class="invalid-message" id="invalid-result-limit"><br /></p>
+          </div>
+
+          <div id="button-container">
+            <button class="btn btn-outline-primary w-100" type="button" id="search-button">
+              <span class="spinner-border spinner-border-sm" id="button-spinner"></span
+              ><span id="button-text">Search</span>
+            </button>
+            <button class="btn btn-outline-danger w-100" type="button" id="clear-button">Clear</button>
+          </div>
         </div>
       </div>
-      <hr class="page-divider" />
+
+      <p id="result-message"></p>
+
+      <div id="map-container">
+        <div id="map" style="position: relative; overflow: hidden"></div>
+      </div>
+
       <div id="results-container">
         <p id="result-message"></p>
         <div id="table-container">
@@ -181,17 +122,13 @@
           </table>
         </div>
       </div>
+
+      <div id="footer"></div>
     </div>
 
-    <!-- These keys are required client-side for the static page to load, so they will be exposed anyways. -->
+    <!-- These keys cannot be private because they are required client-side for the static page to load. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKVY063aJ0AXoPwbZk5laQ0x8_8YDkdoc"></script>
     <script src="https://kit.fontawesome.com/dbba22b539.js" async=""></script>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
 
     <script type="text/javascript" src="./js/DataRequestManager.js"></script>
     <script type="text/javascript" src="./js/MapManager.js"></script>
