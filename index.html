@@ -1,130 +1,136 @@
 <html>
   <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-      crossorigin="anonymous"
-    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Herman Cai" />
-    <meta name="description" content="Find past earthquake events on a map by using customizable search terms." />
+    <meta
+      name="description"
+      content="Find past earthquake events on a map by using customizable search terms."
+    />
     <link rel="icon" type="image/png" href="./images/favicon.png" />
     <title>Earthquake Mapper</title>
-    <link rel="stylesheet" href="./css/eqmapper.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
   </head>
+
   <body>
-    <div id="page-container">
-      <div id="header-container">
-        <div id="header">
-          <img style="height: 30px" src="./images/favicon.png" alt="favicon" />
-          <h2 style="color: #ffffff; margin: 0">Earthquake Mapper</h2>
+    <div class="header">
+      <img class="logo" src="./images/favicon.png" alt="favicon" />
+      <h2>Earthquake Mapper</h2>
+    </div>
+
+    <p class="prompt">
+      Search for earthquake events by filling this form or clicking:
+      <button id="exampleButton">Sample Search</button>
+    </p>
+
+    <div class="mainContainer">
+      <div class="formContainer">
+        <label class="customLabel" for="inputLocation">Location</label>
+        <input
+          type="text"
+          class="customInput"
+          id="inputLocation"
+          placeholder="Location"
+        />
+        <p class="invalidMessage" id="invalidLocation"><br /></p>
+
+        <label class="customLabel" for="inputStartDate">Starting Date</label>
+        <input class="customInput" type="date" id="inputStartDate" />
+        <div class="checkboxInput">
+          <input
+            class="customCheckbox"
+            type="checkbox"
+            value=""
+            id="checkStartDate"
+          /><label for="checkStartDate">30 Days Before</label>
         </div>
+        <p class="invalidMessage" id="invalidStartDate"><br /></p>
+
+        <label class="customLabel" for="inputEndDate">Ending Date</label>
+        <input class="customInput" type="date" id="inputEndDate" />
+        <div class="checkboxInput">
+          <input
+            class="customCheckbox"
+            type="checkbox"
+            value=""
+            id="checkEndDate"
+          /><label for="checkEndDate">Now</label>
+        </div>
+        <p class="invalidMessage" id="invalidEndDate"><br /></p>
+
+        <label class="customLabel" for="magRange">Magnitude (0 - 10)</label>
+        <div class="magnitudeInput">
+          <input
+            class="customInput"
+            type="text"
+            id="magMin"
+            placeholder="Min"
+          />
+          <input
+            class="customInput"
+            type="text"
+            id="magMax"
+            placeholder="Max"
+          />
+        </div>
+        <p class="invalidMessage" id="invalidMagRange"><br /></p>
+
+        <label for="searchRadius">Search Radius (km)</label>
+        <input
+          class="customInput"
+          type="text"
+          id="searchRadius"
+          placeholder="Search Radius (km)"
+        />
+        <p class="invalidMessage" id="invalidSearchRadius"><br /></p>
+
+        <label for="resultLimit">Result Limit (1 - 1,000)</label>
+        <input
+          class="customInput"
+          type="text"
+          id="resultLimit"
+          placeholder="Result Limit"
+        />
+        <p class="invalidMessage" id="invalidResultLimit"><br /></p>
+
+        <div class="buttonContainer">
+          <button id="searchButton">Search</button>
+          <button id="clearButton">Clear</button>
+        </div>
+
+        <p id="resultMessage"></p>
       </div>
 
-      <div id="form-container">
-        <div style="display: flex; flex-direction: column">
-          <p style="font-weight: bold">Search for earthquake events using these parameters.</p>
-          <p style="font-style: italic">
-            To see a sample map, click <span id="example-button" class="text-primary">here</span>.
-          </p>
-        </div>
-
-        <div id="input-container">
-          <div class="form-floating">
-            <input class="form-control" type="text" id="input-location" placeholder="Location" required="" /><label
-              for="input-location"
-              >Location</label
-            >
-          </div>
-          <p class="invalid-message" id="invalid-location"><br /></p>
-
-          <label class="col-form-label" for="input-start-date">Starting Date</label>
-          <input class="form-control" type="date" id="input-start-date" />
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="" id="check-start-date" /><label
-              class="form-check-label"
-              for="check-start-date"
-              >30 Days Before</label
-            >
-          </div>
-          <p class="invalid-message" id="invalid-start-date"><br /></p>
-
-          <label class="col-form-label" for="input-end-date">Ending Date</label>
-          <input class="form-control" type="date" id="input-end-date" />
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" value="" id="check-end-date" /><label
-              class="form-check-label"
-              for="check-end-date"
-              >Now</label
-            >
-          </div>
-          <p class="invalid-message" id="invalid-end-date"><br /></p>
-
-          <label class="col-form-label" for="mag-range">Magnitude</label>
-          <div class="form-floating">
-            <input class="form-control" type="text" id="mag-min" placeholder="Min" /><label for="mag-min">Min</label>
-          </div>
-          <div class="form-floating">
-            <input class="form-control" type="text" id="mag-max" placeholder="Max" /><label for="mag-max">Max</label>
-          </div>
-          <p class="invalid-message" id="invalid-mag-range"><br /></p>
-
-          <div class="form-floating">
-            <input class="form-control" type="text" id="search-radius" placeholder="Search Radius (km)" /><label
-              for="search-radius"
-              >Search Radius (km)</label
-            >
-            <p class="invalid-message" id="invalid-search-radius"><br /></p>
-          </div>
-
-          <div class="form-floating">
-            <input class="form-control" type="text" id="result-limit" placeholder="Result Limit" /><label
-              for="result-limit"
-              >Result Limit
-            </label>
-            <p class="invalid-message" id="invalid-result-limit"><br /></p>
-          </div>
-
-          <div id="button-container">
-            <button class="btn btn-outline-primary w-100" type="button" id="search-button">
-              <span class="spinner-border spinner-border-sm" id="button-spinner"></span
-              ><span id="button-text">Search</span>
-            </button>
-            <button class="btn btn-outline-danger w-100" type="button" id="clear-button">Clear</button>
-          </div>
-        </div>
-      </div>
-
-      <p id="result-message"></p>
-
-      <div id="map-container">
+      <div id="mapContainer">
         <div id="map" style="position: relative; overflow: hidden"></div>
       </div>
-
-      <div id="results-container">
-        <p id="result-message"></p>
-        <div id="table-container">
-          <table class="table table-hover table-bordered overflow-auto caption-top" id="result-table">
-            <caption>
-              Click on a row to highlight the event on the map.
-            </caption>
-            <thead>
-              <tr id="table-head-row">
-                <th scope="col"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></th>
-                <th scope="col" id="magnitude-column">Magnitude <i class="fas fa-sort" aria-hidden="true"></i></th>
-                <th scope="col">Location</th>
-                <th scope="col" id="date-column">Date <i class="fas fa-sort" aria-hidden="true"></i></th>
-                <th scope="col" style="display: none" id="hidden-date-column"></th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div id="footer"></div>
     </div>
+
+    <div id="resultContainer">
+      <p id="tableCaption">Click on a row to highlight the event on the map.</p>
+      <div id="tableContainer">
+        <table>
+          <thead>
+            <tr id="tableHeadRow">
+              <th scope="col">
+                <i class="fas fa-exclamation-circle" aria-hidden="true"></i>
+              </th>
+              <th scope="col" id="magnitudeColumn">
+                Magnitude <i class="fas fa-sort" aria-hidden="true"></i>
+              </th>
+              <th scope="col">Location</th>
+              <th scope="col" id="dateColumn">
+                Date <i class="fas fa-sort" aria-hidden="true"></i>
+              </th>
+              <th scope="col" style="display: none" id="hiddenDateColumn"></th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="footer"></div>
 
     <!-- These keys cannot be private because they are required client-side for the static page to load. -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKVY063aJ0AXoPwbZk5laQ0x8_8YDkdoc"></script>

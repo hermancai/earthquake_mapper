@@ -1,0 +1,213 @@
+html,
+button {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body,
+p {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+}
+
+.logo {
+  height: 30px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #242424;
+  color: #fff;
+  padding: 0 2rem;
+}
+
+.prompt {
+  padding: 1rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+#exampleButton,
+#searchButton {
+  background-color: #162340;
+  border: solid 1px #223561;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  white-space: nowrap;
+}
+
+#exampleButton:hover,
+#searchButton:hover {
+  background-color: #223561;
+  cursor: pointer;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 2rem;
+}
+
+.customLabel,
+#exampleButton,
+#searchButton,
+#clearButton {
+  font-size: large;
+}
+
+.customInput {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: large;
+}
+
+.checkboxInput {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkboxInput input,
+.checkboxInput label {
+  cursor: pointer;
+}
+
+.customCheckbox {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.magnitudeInput {
+  display: flex;
+  gap: 1rem;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+#searchButton,
+#clearButton {
+  flex-grow: 1;
+  min-width: 175px;
+}
+
+#clearButton {
+  padding: 0.5rem 1rem;
+  background-color: #ff5f57;
+  border: solid 1px #ff5f57;
+  border-radius: 3px;
+}
+
+#clearButton:hover {
+  cursor: pointer;
+  background-color: #fa837d;
+}
+
+#resultMessage {
+  margin-top: 1rem;
+  animation-name: resultMessage;
+  animation-iteration-count: 0;
+  animation-duration: 2s;
+}
+
+@keyframes resultMessage {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: #abcdff;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+.invalidMessage {
+  font-size: 0.8em;
+  color: red;
+  margin-bottom: 3px;
+}
+
+#mapContainer {
+  border: 1px solid black;
+  margin: 2rem;
+  height: 400px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+#resultContainer {
+  display: none;
+  margin: 0 2rem 2rem 2rem;
+  flex-direction: column;
+}
+
+#tableContainer {
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+#magnitudeColumn,
+#dateColumn {
+  cursor: pointer;
+}
+
+tbody tr:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#tableCaption {
+  margin-bottom: 1rem;
+  color: gray;
+}
+
+#footer {
+  width: 100%;
+  height: 50px;
+  background-color: #242424;
+}
+
+@media screen and (min-width: 800px) {
+  .mainContainer {
+    flex-direction: row;
+  }
+
+  .formContainer,
+  #mapContainer {
+    width: 100%;
+  }
+}

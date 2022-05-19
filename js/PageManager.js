@@ -10,15 +10,23 @@ class PageManager {
     let geocoder = new google.maps.Geocoder(); // get results after searching google maps
     mm.initMap(); // load and display google map
 
-    document.getElementById("search-button").addEventListener("click", this.searchButtonEvent(drm, mm, fd, geocoder));
-    document.getElementById("example-button").addEventListener("click", () => {
+    document
+      .getElementById("searchButton")
+      .addEventListener("click", this.searchButtonEvent(drm, mm, fd, geocoder));
+    document.getElementById("exampleButton").addEventListener("click", () => {
       this.setDefaultValues();
       fd.clearInvalidMessages();
-      document.getElementById("search-button").click();
+      document.getElementById("searchButton").click();
     });
-    document.getElementById("clear-button").addEventListener("click", this.clearValues);
-    document.getElementById("check-start-date").addEventListener("click", this.disableStartDate);
-    document.getElementById("check-end-date").addEventListener("click", this.disableEndDate);
+    document
+      .getElementById("clearButton")
+      .addEventListener("click", this.clearValues);
+    document
+      .getElementById("checkStartDate")
+      .addEventListener("click", this.disableStartDate);
+    document
+      .getElementById("checkEndDate")
+      .addEventListener("click", this.disableEndDate);
 
     this.disableEndDate();
     this.disableStartDate();
@@ -32,9 +40,14 @@ class PageManager {
         this.clearResults();
         mm.removeMarkers();
 
+        document
+          .getElementById("resultMessage")
+          .scrollIntoView({ behavior: "smooth" });
+
         try {
           // wait for google maps to return location info
-          var { latitude: latitude, longitude: longitude } = await mm.searchLocation(geocoder);
+          var { latitude: latitude, longitude: longitude } =
+            await mm.searchLocation(geocoder);
           mm.addLocationMarker(latitude, longitude);
         } catch (err) {
           this.restoreSearchButton();
@@ -44,8 +57,9 @@ class PageManager {
 
         try {
           // wait for USGS to return JSON response
-          let resultMessage = document.getElementById("result-message");
-          resultMessage.innerHTML = "Requesting data from USGS. This may take a while, depending on your search terms.";
+          let resultMessage = document.getElementById("resultMessage");
+          resultMessage.innerHTML =
+            "Requesting data from USGS. This may take a while, depending on your search terms.";
           resultMessage.style.animationIterationCount = "infinite";
           var response = await drm.getData(latitude, longitude);
         } catch (err) {
@@ -61,78 +75,76 @@ class PageManager {
         }
         this.restoreSearchButton();
 
-        document.getElementById("result-message").scrollIntoView();
+        document
+          .getElementById("resultMessage")
+          .scrollIntoView({ behavior: "smooth" });
       }
     };
   }
 
   // fill all inputs with default values
   setDefaultValues() {
-    document.getElementById("input-location").value = "San Francisco";
-    document.getElementById("input-start-date").value = "2000-01-01";
-    document.getElementById("input-end-date").disabled = true;
-    document.getElementById("check-end-date").checked = true;
-    document.getElementById("check-start-date").checked = false;
-    document.getElementById("input-start-date").disabled = false;
-    document.getElementById("mag-min").value = "6";
-    document.getElementById("mag-max").value = "10";
-    document.getElementById("search-radius").value = "500";
-    document.getElementById("result-limit").value = "20";
+    document.getElementById("inputLocation").value = "San Francisco";
+    document.getElementById("inputStartDate").value = "2000-01-01";
+    document.getElementById("inputEndDate").disabled = true;
+    document.getElementById("checkEndDate").checked = true;
+    document.getElementById("checkStartDate").checked = false;
+    document.getElementById("inputStartDate").disabled = false;
+    document.getElementById("magMin").value = "6";
+    document.getElementById("magMax").value = "10";
+    document.getElementById("searchRadius").value = "500";
+    document.getElementById("resultLimit").value = "20";
   }
 
   // clear all input values
   clearValues() {
-    document.getElementById("input-location").value = "";
-    document.getElementById("input-start-date").value = "";
-    document.getElementById("input-end-date").value = "";
-    document.getElementById("search-radius").value = "";
-    document.getElementById("mag-min").value = "";
-    document.getElementById("mag-max").value = "";
-    document.getElementById("result-limit").value = "";
+    document.getElementById("inputLocation").value = "";
+    document.getElementById("inputStartDate").value = "";
+    document.getElementById("inputEndDate").value = "";
+    document.getElementById("searchRadius").value = "";
+    document.getElementById("magMin").value = "";
+    document.getElementById("magMax").value = "";
+    document.getElementById("resultLimit").value = "";
   }
 
   // disable start date input if checkbox is checked
   disableStartDate() {
-    if (document.getElementById("check-start-date").checked) {
-      document.getElementById("input-start-date").disabled = true;
+    if (document.getElementById("checkStartDate").checked) {
+      document.getElementById("inputStartDate").disabled = true;
     } else {
-      document.getElementById("input-start-date").disabled = false;
+      document.getElementById("inputStartDate").disabled = false;
     }
   }
 
   // disable end date input if checkbox is checked
   disableEndDate() {
-    if (document.getElementById("check-end-date").checked) {
-      document.getElementById("input-end-date").disabled = true;
+    if (document.getElementById("checkEndDate").checked) {
+      document.getElementById("inputEndDate").disabled = true;
     } else {
-      document.getElementById("input-end-date").disabled = false;
+      document.getElementById("inputEndDate").disabled = false;
     }
   }
 
   // reset results section and table after new search
   clearResults() {
-    document.getElementById("result-message").innerHTML = "";
-    document.getElementById("result-table").style.display = "none";
-    document.getElementById("table-body").replaceChildren();
+    document.getElementById("resultMessage").innerHTML = "";
+    document.getElementById("resultContainer").style.display = "none";
+    document.getElementById("tableBody").replaceChildren();
   }
 
-  // show loading animation and lock button while searching
+  // lock button while searching
   disableSearchButton() {
-    document.getElementById("search-button").setAttribute("disabled", true);
-    document.getElementById("button-text").style.display = "none";
-    document.getElementById("button-spinner").style.display = "inline-block";
+    document.getElementById("searchButton").setAttribute("disabled", true);
   }
 
-  // hide loading animation and unlock button when search completes
+  // unlock button when search completes
   restoreSearchButton() {
-    document.getElementById("search-button").removeAttribute("disabled");
-    document.getElementById("button-text").style.display = "inline-block";
-    document.getElementById("button-spinner").style.display = "none";
+    document.getElementById("searchButton").removeAttribute("disabled");
   }
 
   // show message based on search results
   displayMessage(resultCount, messageString) {
-    let message = document.getElementById("result-message");
+    let message = document.getElementById("resultMessage");
     message.style.animationIterationCount = "0";
     switch (resultCount) {
       case -2:
@@ -151,7 +163,7 @@ class PageManager {
 
   // use results to build table and draw markers on map
   displayResults(mm, results, lat, lng) {
-    let tableBody = document.getElementById("table-body");
+    let tableBody = document.getElementById("tableBody");
     let bounds = new google.maps.LatLngBounds(); // for updating map zoom level
     bounds.extend({ lat: lat, lng: lng });
 
@@ -170,12 +182,17 @@ class PageManager {
       tableRow.appendChild(this.createTableCell(0, results[i].properties.time)); // hidden column for sorting
 
       tableBody.appendChild(tableRow);
-      mm.drawMarker(tableRow, magStr + " - " + placeStr + "<br>" + dateStr, results[i], bounds);
+      mm.drawMarker(
+        tableRow,
+        magStr + " - " + placeStr + "<br>" + dateStr,
+        results[i],
+        bounds
+      );
     }
 
     mm.map.fitBounds(bounds); // zoom out on map to show all markers
     this.renewEventListeners(); // renew click events for sorting table columns
-    document.getElementById("result-table").style.display = "inline-block";
+    document.getElementById("resultContainer").style.display = "flex";
   }
 
   // create table cell containing given text content
@@ -188,10 +205,12 @@ class PageManager {
 
   // allow sorting table column by ascending or descending order
   sortTableColumn(columnIndex) {
-    let tableBody = document.getElementById("table-body");
+    let tableBody = document.getElementById("tableBody");
     let rows = Array.from(tableBody.querySelectorAll("tr"));
 
-    let columnHeader = document.getElementById("table-head-row").querySelector(`th:nth-child(${columnIndex})`);
+    let columnHeader = document
+      .getElementById("tableHeadRow")
+      .querySelector(`th:nth-child(${columnIndex})`);
     let ascending = columnHeader.className == "asc";
 
     let querySelect = `td:nth-child(${columnIndex})`;
@@ -218,16 +237,19 @@ class PageManager {
 
   // remove and replace event listeners by cloning nodes
   renewEventListeners() {
-    let magnitudeColumn = document.getElementById("magnitude-column");
-    magnitudeColumn.parentNode.replaceChild(magnitudeColumn.cloneNode(true), magnitudeColumn);
-    magnitudeColumn = document.getElementById("magnitude-column");
+    let magnitudeColumn = document.getElementById("magnitudeColumn");
+    magnitudeColumn.parentNode.replaceChild(
+      magnitudeColumn.cloneNode(true),
+      magnitudeColumn
+    );
+    magnitudeColumn = document.getElementById("magnitudeColumn");
     magnitudeColumn.addEventListener("click", () => {
       this.sortTableColumn(2);
     });
 
-    let dateColumn = document.getElementById("date-column");
+    let dateColumn = document.getElementById("dateColumn");
     dateColumn.parentNode.replaceChild(dateColumn.cloneNode(true), dateColumn);
-    dateColumn = document.getElementById("date-column");
+    dateColumn = document.getElementById("dateColumn");
     dateColumn.addEventListener("click", () => {
       this.sortTableColumn(5);
     });
