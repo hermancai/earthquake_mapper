@@ -20,7 +20,7 @@ class MapManager {
   // async search for the location and return location coordinates
   async searchLocation(geocoder) {
     return new Promise((resolve, reject) => {
-      let address = document.getElementById("input-location").value;
+      let address = document.getElementById("inputLocation").value;
 
       geocoder.geocode({ address: address }, (results, status) => {
         if (status === "OK") {

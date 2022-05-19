@@ -4,27 +4,36 @@ class DataRequestManager {
 
   // Gather user input from the page to create a URL.
   buildURL(latitude, longitude) {
-    let baseURL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude";
+    let baseURL =
+      "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=magnitude";
 
-    let startDate = "&starttime=" + document.getElementById("input-start-date").value;
-    let endDate = "&endtime=" + document.getElementById("input-end-date").value;
-    if (document.getElementById("check-start-date").checked) {
+    let startDate =
+      "&starttime=" + document.getElementById("inputStartDate").value;
+    let endDate = "&endtime=" + document.getElementById("inputEndDate").value;
+    if (document.getElementById("checkStartDate").checked) {
       startDate = "";
     }
-    if (document.getElementById("check-end-date").checked) {
+    if (document.getElementById("checkEndDate").checked) {
       endDate = "";
     }
 
     let coordinates = "&latitude=" + latitude + "&longitude=" + longitude;
-    let maxRadiusKm = "&maxradiuskm=" + document.getElementById("search-radius").value;
+    let maxRadiusKm =
+      "&maxradiuskm=" + document.getElementById("searchRadius").value;
     let magnitudeRange =
       "&minmagnitude=" +
-      document.getElementById("mag-min").value +
+      document.getElementById("magMin").value +
       "&maxmagnitude=" +
-      document.getElementById("mag-max").value;
-    let resultsLimit = "&limit=" + document.getElementById("result-limit").value;
+      document.getElementById("magMax").value;
+    let resultsLimit = "&limit=" + document.getElementById("resultLimit").value;
 
-    baseURL += startDate + endDate + coordinates + maxRadiusKm + magnitudeRange + resultsLimit;
+    baseURL +=
+      startDate +
+      endDate +
+      coordinates +
+      maxRadiusKm +
+      magnitudeRange +
+      resultsLimit;
     return baseURL;
   }
 
